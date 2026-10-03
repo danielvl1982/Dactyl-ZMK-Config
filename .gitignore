@@ -1,0 +1,15 @@
+# ZMK build output
+build/
+*.uf2
+
+# West / Zephyr workspace
+.west/
+modules/
+zephyr/
+zmk/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
