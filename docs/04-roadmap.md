@@ -42,9 +42,12 @@ Today each half is an independent keyboard. The goal is one keymap that governs 
 ## Phase 4 — Final keymap
 
 - [ ] Implement `03-keymap.md` as devicetree.
+- [ ] Verify `FN1` (numbers and F1-F12) and `FN2` (navigation and symbols) as
+      momentary, non-falling-through maps.
 - [ ] Type a Spanish test text and verify every accented character:
       `á é í ó ú ü Á É Í Ó Ú Ñ ñ ¿ ¡`.
-- [ ] Adjust modifier and space placement based on real use.
+- [ ] Test the left Shift, lower-right Enter/Space/Backspace cluster, and whether
+      modifiers should remain available while a function map is active.
 - [ ] Decide the trackball integration in ZMK.
 
 ## Phase 5 — Labels
@@ -57,8 +60,9 @@ Today each half is an independent keyboard. The goal is one keymap that governs 
 
 | Decision | Options | Status |
 | --- | --- | --- |
-| Numbers | Function layer (chosen) vs direct number row | Decided: layer |
-| Modifiers | Top row + outer column vs home-row mods | v0.1 uses dedicated keys |
-| Space | Left inner bottom (chosen) vs right, or a combo | v0.1 decided, to confirm |
+| Numbers/functions | `FN1` map vs direct number row | v0.2: `FN1` approved, not flashed |
+| Navigation/symbols | `FN2` map vs dedicated keys | v0.2: `FN2` approved, not flashed |
+| Modifiers | Left Shift and lower-left Ctrl/Win/Alt; repeat on function maps? | Base decided; function-map access open |
+| Space | Lower right, between Enter and Backspace | v0.2 approved, to confirm by typing |
 | Central half | Left | Planned |
 | Trackball | ZMK pointing device vs separate controller | Not started |

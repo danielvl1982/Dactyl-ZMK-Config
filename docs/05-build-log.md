@@ -3,6 +3,30 @@
 Newest entries first. Every entry records what was done, what was observed and what
 comes next. Failures are recorded with their cause and their fix.
 
+## 2026-10-21 — Keymap v0.2 approved
+
+**Done**
+
+- Documented the approved 46-key NORMAL map in [03-keymap.md](03-keymap.md):
+  QWERTY letters, a left Shift in the position initially called Caps, direct
+  Home/End, and an Enter/Space/Backspace cluster on the lower right.
+- Defined two held function maps: `FN1` for the Spanish number row and F1-F12,
+  and `FN2` for navigation and coding symbols, especially `<`, `>`, and `@`.
+- Kept the maps independent: positions not assigned on a function map are
+  inactive rather than falling through to NORMAL.
+
+**Observed**
+
+- This is a documented layout decision only. The v0.2 keymap has not been
+  implemented in devicetree, flashed or tested on the keyboard.
+
+**Next**
+
+- Implement and validate the ES symbol bindings, held-layer behavior, and
+  modifier access on function maps during Phase 4 of the roadmap.
+
+---
+
 ## 2026-10-20 — Project documentation
 
 **Done**
