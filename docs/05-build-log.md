@@ -23,6 +23,10 @@ comes next. Failures are recorded with their cause and their fix.
 
 - CI run `39615755235` succeeded and produced `dactyl_left-nice_nano__zmk-zmk.uf2`
   (460800 bytes) and `dactyl_right-nice_nano__zmk-zmk.uf2` (377856 bytes).
+- An independent review of the ES bindings found nine wrong ones: braces, brackets,
+  backslash and angle brackets were mapped from the X11 `es` layout, which differs
+  from the Windows layout the keyboard talks to. They were corrected against
+  KBDSP and CI run `39643551800` succeeded on the corrected keymap.
 - Not flashed. The build proves it compiles, not that every key is in the right place.
 
 **Next**
