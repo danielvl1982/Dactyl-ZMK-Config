@@ -1,3 +1,5 @@
 include:
   - board: nice_nano//zmk
     shield: dactyl_left
+  - board: nice_nano//zmk
+    shield: dactyl_right

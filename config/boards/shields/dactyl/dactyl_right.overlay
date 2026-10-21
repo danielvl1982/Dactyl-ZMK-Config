@@ -1,0 +1,18 @@
+#include "dactyl.dtsi"
+
+&kscan0 {
+    /* Same pinout as the left half; the PCB is the mirror image. */
+    col-gpios
+        = <&pro_micro 2 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 3 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 4 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 5 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 6 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 7 GPIO_ACTIVE_HIGH>
+        ;
+};
+
+&default_transform {
+    /* Offset of 6 because the left half owns columns 0-5. */
+    col-offset = <6>;
+};

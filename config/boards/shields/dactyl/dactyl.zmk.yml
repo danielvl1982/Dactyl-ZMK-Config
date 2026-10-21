@@ -1,6 +1,6 @@
 file_format: "1"
-id: dactyl_left
-name: Dactyl 4x6 Left
+id: dactyl_4x6
+name: Dactyl 4x6
 type: shield
 url: https://www.thingiverse.com/thing:6556207
 requires: [pro_micro]
