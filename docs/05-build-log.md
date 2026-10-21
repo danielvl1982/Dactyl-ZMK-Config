@@ -3,6 +3,35 @@
 Newest entries first. Every entry records what was done, what was observed and what
 comes next. Failures are recorded with their cause and their fix.
 
+## 2026-10-21 — Split firmware and keymap v1.0
+
+**Done**
+
+- Rebuilt the shield as one directory, `config/boards/shields/dactyl/`, shared by
+  both halves: `dactyl.dtsi` holds the kscan and a 12-column transform, with
+  `dactyl_left.overlay` and `dactyl_right.overlay` adding the column pins.
+- Added the split: `ZMK_SPLIT` on both halves, `ZMK_SPLIT_ROLE_CENTRAL` on the left,
+  and `col-offset = <6>` on the right so its reversed columns land in reading order.
+- Implemented `config/dactyl.keymap` with the four v1.0 layers, 48 bindings each:
+  the 46 keys plus the two `&none` gaps where there is no switch.
+- Translated every ES symbol to its AltGr combination (`&kp RA(...)`); backtick and
+  circumflex became macros because both are dead keys on ES.
+- Added both shields to `build.yaml`. The keymap moved from
+  `config/dactyl_left.keymap` to `config/dactyl.keymap`, which applies to both.
+
+**Observed**
+
+- CI run `39615755235` succeeded and produced `dactyl_left-nice_nano__zmk-zmk.uf2`
+  (460800 bytes) and `dactyl_right-nice_nano__zmk-zmk.uf2` (377856 bytes).
+- Not flashed. The build proves it compiles, not that every key is in the right place.
+
+**Next**
+
+- Flash both halves and run the per-key check described in
+  [02-current-state.md](02-current-state.md).
+
+---
+
 ## 2026-10-21 — Keymap v1.0 supersedes v0.2
 
 **Done**

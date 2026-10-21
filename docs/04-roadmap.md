@@ -3,28 +3,28 @@
 Ordered list of what is left. Tick a box only with evidence in the
 [build log](05-build-log.md).
 
-## Phase 1 — Documentation
+## Phase 1 â€” Documentation
 
 - [x] Create `README.md` and the `docs/` folder.
 - [x] Record the hardware, the current state, the mapping and the plan.
 - [ ] Fill in the four AliExpress product descriptions in `01-hardware.md`.
 - [ ] Confirm that both nice!nano boards are identical and healthy.
 
-## Phase 2 — Turn the two halves into one split
+## Phase 2 â€” Turn the two halves into one split
 
 Today each half is an independent keyboard. The goal is one keymap that governs both.
 
-- [ ] Create the `dactyl_right` shield (mirror of `dactyl_left`).
-- [ ] Add `CONFIG_ZMK_SPLIT=y` for both halves and
+- [x] Create the `dactyl_right` shield (mirror of `dactyl_left`).
+- [x] Add `CONFIG_ZMK_SPLIT=y` for both halves and
       `CONFIG_ZMK_SPLIT_ROLE_CENTRAL=y` for the left half in `Kconfig.defconfig`.
-- [ ] Fix the mirror: reverse the column order in the right half's transform and set
+- [x] Fix the mirror: reverse the column order in the right half's transform and set
       `col-offset = <6>`.
-- [ ] Move the keymap out of the left shield into `config/dactyl.keymap`.
-- [ ] Add both targets to `build.yaml` so CI produces two `.uf2` files.
+- [x] Move the keymap out of the left shield into `config/dactyl.keymap`.
+- [x] Add both targets to `build.yaml` so CI produces two `.uf2` files.
 - [ ] Flash both halves and verify that every physical key produces the expected
       character, in order, across the whole board.
 
-## Phase 3 — Battery and Bluetooth
+## Phase 3 â€” Battery and Bluetooth
 
 - [ ] Verify the TRRS pinout does not carry VCC between the halves.
 - [ ] Fit one LiPo per half.
@@ -39,18 +39,18 @@ Today each half is an independent keyboard. The goal is one keymap that governs 
 > Safety: with two batteries fitted, the TRRS cable must not connect VCC between the
 > halves. For a BLE split the cable is not needed at all.
 
-## Phase 4 — Final keymap
+## Phase 4 â€” Final keymap
 
-- [ ] Implement `03-keymap.md` as devicetree.
+- [x] Implement `03-keymap.md` as devicetree.
 - [ ] Verify `NUM`, `NAV` and `SYM` as momentary layers (`&mo`) that fall through
       to the base layer with `&trans`.
 - [ ] Type a Spanish test text and verify every accented character:
-      `á é í ó ú ü Á É Í Ó Ú Ñ ñ ¿ ¡`.
+      `Ã¡ Ã© Ã­ Ã³ Ãº Ã¼ Ã Ã‰ Ã Ã“ Ãš Ã‘ Ã± Â¿ Â¡`.
 - [ ] Test the left Shift, the left bottom row (Space, Ctrl, Win), the right bottom
       row (Enter, Backspace, Alt) and the three held outer-right keys.
 - [ ] Decide the trackball integration in ZMK.
 
-## Phase 5 — Labels
+## Phase 5 â€” Labels
 
 - [ ] Order transparent stickers with the final legend.
 - [ ] Apply them on the printed keycaps.

@@ -1,13 +1,20 @@
 # Current state
 
-Last updated: 2026-10-20
+Last updated: 2026-10-21
 
 ## What works
 
 - The matrix is soldered and every switch of both halves registers.
-- The left half runs ZMK and types.
-- The test keymap in `config/dactyl_left.keymap` assigns `A` to `X` row by row so
-  the wiring can be verified.
+- Each half runs ZMK and types over USB.
+- The split is configured in firmware: `dactyl_left` is the central half,
+  `dactyl_right` carries `col-offset = <6>`, and both share one 12-column transform.
+- The v1.0 keymap (`config/dactyl.keymap`) implements the four documented layers.
+
+## Not yet verified on hardware
+
+The split firmware and the v1.0 keymap have not been flashed. The GitHub Actions
+build proves that both halves compile; it does not prove that each key landed in the
+right position. Flashing and the per-key check below are the open step.
 
 ## Test result
 
@@ -22,9 +29,9 @@ row). Pressing the keys physically from left to right produces:
 Two conclusions:
 
 1. **23 keys per half.** The fourth row produces five letters, not six. The missing
-   position is the bottom key of the outer column (`RC(3,0)` on the left,
-   `RC(3,5)` on the right). The unused position exists in the matrix and in the
-   transform but has no switch.
+   position is the bottom key of the outer column (`RC(3,0)` in each half's own
+   matrix, `RC(3,6)` for the right half once it is offset into the shared transform).
+   The unused position exists in the matrix and in the transform but has no switch.
 2. **The right half is mirrored.** It outputs the same sequence in reverse order,
    because its physical column 0 is the outermost key instead of the innermost one.
 
@@ -45,9 +52,7 @@ not in the keymap (which would need every row written backwards, twice).
 
 | Gap | Detail |
 | --- | --- |
-| Not a split | `dactyl_left.overlay` defines one 24-position kscan with no `zmk,split`, no `col-offset` and no right shield. Each half currently behaves as an independent keyboard. |
-| No right shield | There is no `dactyl_right` shield, so both halves use the same "left" definition. |
-| Test keymap only | `A`..`X` is intentional and temporary. It does not type Spanish yet. |
+| Not flashed | The split configuration and the v1.0 keymap exist only in `main`; only the old 24-position test keymap has run on hardware. |
 | No battery | Powered over USB. Each half needs its own LiPo for BLE operation. |
 | Cable | The halves are joined by a TRRS cable. It will not be used once the BLE split is configured. |
 | No labels | Keycaps are blank; the stickers will be ordered after the mapping is fixed. |

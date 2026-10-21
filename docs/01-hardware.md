@@ -55,8 +55,14 @@ From `config/boards/shields/dactyl_left/dactyl_left.overlay`:
 
 Diode direction: `col2row`.
 
-The matrix exposes 4 x 6 = 24 positions; position `RC(3,0)` on the left half
-(`RC(3,5)` after mirroring on the right half) has no switch.
+Both halves use the same pinout. The right half is only mirrored mechanically, so
+its matrix is read with `col-offset = <6>` and a reversed column order in the shared
+transform.
+
+The matrix exposes 4 x 6 = 24 positions per half. The bottom position of the outer
+column (`RC(3,0)` in each half's own matrix) has no
+switch. In the shared 12-column transform the left gap is `RC(3,0)` and the right
+gap is `RC(3,6)`.
 
 ## Printed parts
 

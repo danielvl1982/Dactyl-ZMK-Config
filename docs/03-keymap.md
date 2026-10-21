@@ -162,13 +162,53 @@ keycode of the same name.
 
 ## How this maps to devicetree
 
-ZMK needs the two halves in one keymap, with 46 entries in `bindings`. The left half
-contributes its 23 positions first, then the right half. Each row of 12 entries is
-written as `6 left + 6 right`.
+The implementation is `config/dactyl.keymap` plus `config/boards/shields/dactyl/`,
+shared by both halves:
 
-The right half needs its own transform with the column order reversed, because its
-PCB is mirrored. That is a one-time fix in the shield, not a per-row reordering in
-the keymap. See [04-roadmap.md](04-roadmap.md).
+- `dactyl.dtsi` defines the kscan and one 12-column `zmk,matrix-transform`.
+- `dactyl_left.overlay` adds the column pins and owns columns 0 to 5.
+- `dactyl_right.overlay` adds the same pins and `col-offset = <6>`, owning columns 6
+  to 11.
+- `Kconfig.defconfig` sets `ZMK_SPLIT` for both halves and
+  `ZMK_SPLIT_ROLE_CENTRAL` on the left, so the left half runs the keymap.
+
+Both PCBs count columns from the outside towards the center, so the transform lists
+the right half in reverse (`RC(r,11)` down to `RC(r,6)`). The keymap then reads in
+physical order: left outer-to-inner, then right inner-to-outer.
+
+Both halves are missing the bottom key of the outer column, so the transform has 48
+positions and every `bindings` list carries 48 entries: the 46 keys plus two `&none`
+gaps, at `RC(3,0)` on the left and `RC(3,6)` on the right.
+
+### ES combinations used
+
+The host layout turns these into characters; ZMK only sends the position. Anything
+ES reaches with AltGr uses `RA(...)`, never the US keycode of the same name.
+
+| Left hand | Binding | Right hand | Binding |
+| --- | --- | --- | --- |
+| `!` | `&kp LS(N1)` | `<` | `&kp RA(LS(Z))` |
+| `@` | `&kp RA(N2)` | `` ` `` | `macro_grave` (dead grave + space) |
+| `#` | `&kp RA(N3)` | `>` | `&kp RA(LS(X))` |
+| `$` | `&kp LS(N4)` | `+` | `&kp RBKT` |
+| `%` | `&kp LS(N5)` | `"` | `&kp LS(N2)` |
+| `[` | `&kp RA(N8)` | `'` | `&kp MINUS` |
+| `]` | `&kp RA(N9)` | `¡` | `&kp EQUAL` |
+| `{` | `&kp RA(N7)` | `?` | `&kp LS(MINUS)` |
+| `}` | `&kp RA(N0)` | `ç` | `&kp BSLH` |
+| `&` | `&kp LS(N6)` | `¿` | `&kp LS(EQUAL)` |
+| `|` | `&kp RA(N1)` | `;` | `&kp LS(COMMA)` |
+| `\` | `&kp RA(MINUS)` | `:` | `&kp LS(DOT)` |
+| `~` | `&kp RA(N4)` | `,` | `&kp COMMA` |
+| `^` | `macro_caret` (dead circumflex + space) | `.` | `&kp DOT` |
+| `*` | `&kp LS(RBKT)` | `-` | `&kp SLASH` |
+| `(` | `&kp LS(N8)` | `º` | `&kp GRAVE` |
+| `)` | `&kp LS(N9)` | `Ñ` | `&kp SEMI` |
+| `/` | `&kp LS(N7)` | `´` | `&kp SQT` |
+| `=` | `&kp LS(N0)` | `_` | `&kp LS(SLASH)` |
+
+`` ` `` and `^` are dead keys on ES, so each is a macro that sends the dead key and
+then `SPACE` to produce the literal character.
 
 ## Open questions
 
