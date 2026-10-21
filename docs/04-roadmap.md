@@ -42,12 +42,12 @@ Today each half is an independent keyboard. The goal is one keymap that governs 
 ## Phase 4 — Final keymap
 
 - [ ] Implement `03-keymap.md` as devicetree.
-- [ ] Verify `FN1` (numbers and F1-F12) and `FN2` (navigation and symbols) as
-      momentary, non-falling-through maps.
+- [ ] Verify `NUM`, `NAV` and `SYM` as momentary layers (`&mo`) that fall through
+      to the base layer with `&trans`.
 - [ ] Type a Spanish test text and verify every accented character:
       `á é í ó ú ü Á É Í Ó Ú Ñ ñ ¿ ¡`.
-- [ ] Test the left Shift, lower-right Enter/Space/Backspace cluster, and whether
-      modifiers should remain available while a function map is active.
+- [ ] Test the left Shift, the left bottom row (Space, Ctrl, Win), the right bottom
+      row (Enter, Backspace, Alt) and the three held outer-right keys.
 - [ ] Decide the trackball integration in ZMK.
 
 ## Phase 5 — Labels
@@ -60,9 +60,10 @@ Today each half is an independent keyboard. The goal is one keymap that governs 
 
 | Decision | Options | Status |
 | --- | --- | --- |
-| Numbers/functions | `FN1` map vs direct number row | v0.2: `FN1` approved, not flashed |
-| Navigation/symbols | `FN2` map vs dedicated keys | v0.2: `FN2` approved, not flashed |
-| Modifiers | Left Shift and lower-left Ctrl/Win/Alt; repeat on function maps? | Base decided; function-map access open |
-| Space | Lower right, between Enter and Backspace | v0.2 approved, to confirm by typing |
+| Numbers | `NUM` layer (hold `FN`) vs direct number row | v1.0: `NUM` layer, not flashed |
+| Navigation and symbols | `NAV` and `SYM` layers vs dedicated keys | v1.0: both layers, not flashed |
+| Modifiers | Left Shift; Ctrl/Win lower left; Alt lower right | v1.0 decided, to confirm by typing |
+| Space | Left inner bottom (`index2`); `Alt` displaced to the right | v1.0 decided, to confirm by typing |
+| `HOME` | Base right outer vs `NAV` | v1.0: moves to `NAV`; `END` stays on base |
 | Central half | Left | Planned |
 | Trackball | ZMK pointing device vs separate controller | Not started |

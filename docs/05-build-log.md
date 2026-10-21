@@ -3,6 +3,35 @@
 Newest entries first. Every entry records what was done, what was observed and what
 comes next. Failures are recorded with their cause and their fix.
 
+## 2026-10-21 — Keymap v1.0 supersedes v0.2
+
+**Done**
+
+- Reconciled the divergence between the two working machines. The keymap drafted
+  locally as v1.0 was kept as the definitive design and v0.2 stayed in the history.
+- Restored [03-keymap.md](03-keymap.md) to v1.0: three held layers, `NUM`, `NAV`
+  and `SYM`, using `&trans` so the base modifiers and letters stay available while
+  a layer is held.
+- Decided the three free outer-right keys: `MO(SYM)` on row 1, the dead acute `´`
+  on row 2, `MO(NAV)` on row 3, all held by the right pinky.
+- Decided the bottom row: `SPACE` on the left `index2`, `LCTRL` and `LGUI` next to
+  it, `LALT` on the right bottom row, `HOME` moved to `NAV`, `END` kept on base.
+- Updated the open-decisions table in [04-roadmap.md](04-roadmap.md) to v1.0.
+
+**Observed**
+
+- This is a documented layout decision only. The v1.0 keymap has not been
+  implemented in devicetree, flashed or tested on the keyboard.
+- v1.0 supersedes v0.2 because `&none` on the function maps of v0.2 disabled the
+  modifiers while a layer was held.
+
+**Next**
+
+- Implement the ES symbol bindings, the held-layer behavior and the bottom-row
+  trades during Phase 4 of the roadmap.
+
+---
+
 ## 2026-10-21 — Keymap v0.2 approved
 
 **Done**
