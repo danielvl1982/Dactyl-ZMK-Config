@@ -183,22 +183,24 @@ gaps, at `RC(3,0)` on the left and `RC(3,6)` on the right.
 ### ES combinations used
 
 The host layout turns these into characters; ZMK only sends the position. Anything
-ES reaches with AltGr uses `RA(...)`, never the US keycode of the same name.
+ES reaches with AltGr uses `RA(...)`, never the US keycode of the same name. The
+table follows the Windows Spanish layout (KBDSP), which is the host this keyboard
+talks to; the X11 `es` layout differs on `[ ] { } \ < >`.
 
 | Left hand | Binding | Right hand | Binding |
 | --- | --- | --- | --- |
-| `!` | `&kp LS(N1)` | `<` | `&kp RA(LS(Z))` |
+| `!` | `&kp LS(N1)` | `<` | `&kp NUBS` |
 | `@` | `&kp RA(N2)` | `` ` `` | `macro_grave` (dead grave + space) |
-| `#` | `&kp RA(N3)` | `>` | `&kp RA(LS(X))` |
+| `#` | `&kp RA(N3)` | `>` | `&kp LS(NUBS)` |
 | `$` | `&kp LS(N4)` | `+` | `&kp RBKT` |
 | `%` | `&kp LS(N5)` | `"` | `&kp LS(N2)` |
-| `[` | `&kp RA(N8)` | `'` | `&kp MINUS` |
-| `]` | `&kp RA(N9)` | `¡` | `&kp EQUAL` |
-| `{` | `&kp RA(N7)` | `?` | `&kp LS(MINUS)` |
-| `}` | `&kp RA(N0)` | `ç` | `&kp BSLH` |
+| `[` | `&kp RA(LBKT)` | `'` | `&kp MINUS` |
+| `]` | `&kp RA(RBKT)` | `¡` | `&kp EQUAL` |
+| `{` | `&kp RA(SQT)` | `?` | `&kp LS(MINUS)` |
+| `}` | `&kp RA(BSLH)` | `ç` | `&kp BSLH` |
 | `&` | `&kp LS(N6)` | `¿` | `&kp LS(EQUAL)` |
 | `|` | `&kp RA(N1)` | `;` | `&kp LS(COMMA)` |
-| `\` | `&kp RA(MINUS)` | `:` | `&kp LS(DOT)` |
+| `\` | `&kp RA(GRAVE)` | `:` | `&kp LS(DOT)` |
 | `~` | `&kp RA(N4)` | `,` | `&kp COMMA` |
 | `^` | `macro_caret` (dead circumflex + space) | `.` | `&kp DOT` |
 | `*` | `&kp LS(RBKT)` | `-` | `&kp SLASH` |

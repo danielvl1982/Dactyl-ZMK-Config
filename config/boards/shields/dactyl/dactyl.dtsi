@@ -26,7 +26,8 @@
      *
      * Both PCB halves count their columns from the outside towards the center, so
      * the right half must be listed in reverse to keep the keymap in reading order.
-     * The last position of the bottom row has no switch on either half.
+     * Each half is missing the bottom key of its outer column: the first position of
+     * the bottom row on the left, the last one on the right.
      */
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
