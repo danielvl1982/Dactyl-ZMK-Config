@@ -1,0 +1,13 @@
+{
+  "name": "dactyl-18650-holder",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Parametric 18650 battery holder for the Dactyl 4x6 case",
+  "scripts": {
+    "build": "node holder_18650_tight.mjs"
+  },
+  "dependencies": {
+    "manifold-3d": "^3.5.4"
+  }
+}

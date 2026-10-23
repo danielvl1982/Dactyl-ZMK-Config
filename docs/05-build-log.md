@@ -17,6 +17,9 @@ comes next. Failures are recorded with their cause and their fix.
 - Cut the cradle at the cell axis so the cell drops in without flexing the plastic,
   and closed each end wall to 2.0 mm to shorten the part by 4 mm.
 - Documented the design in [01-hardware.md](01-hardware.md#battery-holder-18650).
+- Versioned the design under `hardware/18650-holder/`: the generator as the source
+  of truth, both STLs, and a `package.json` that pins `manifold-3d`. `node_modules/`
+  is ignored.
 
 **Observed**
 

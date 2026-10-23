@@ -44,12 +44,15 @@ config/
     dactyl_left.zmk.yml               # shield metadata
     Kconfig.defconfig                 # shield Kconfig
     Kconfig.shield
+hardware/
+  18650-holder/                       # parametric battery holder (generator + STLs)
 build.yaml                            # GitHub Actions build targets
 docs/                                 # project documentation
 ```
 
-The QMK port (`src/`), the 3D models (`files/`), photos and the vendor firmware
-live in the parent project folder, outside this repository.
+The QMK port (`src/`), the case and keycap models (`files/`), the original battery
+tray (`NCR18650B/`), photos and the vendor firmware live in the parent project
+folder, outside this repository.
 
 ## Build
 

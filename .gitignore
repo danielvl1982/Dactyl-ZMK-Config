@@ -8,6 +8,9 @@ modules/
 zephyr/
 zmk/
 
+# Node tooling for the hardware generators
+node_modules/
+
 # Editors / OS
 .vscode/
 .idea/

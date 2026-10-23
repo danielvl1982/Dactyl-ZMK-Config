@@ -81,8 +81,8 @@ Thingiverse and live in the parent project folder under `files/`:
 | `pro_micro_adapter.stl` | Controller adapter |
 | `blankkeycap.STL` | Blank keycap |
 
-The battery holder in `NCR18650B/` is a custom design rather than a downloaded
-model. It is described in [Battery holder](#battery-holder-18650).
+The battery holder in `hardware/18650-holder/` is a custom design rather than a
+downloaded model. It is described in [Battery holder](#battery-holder-18650).
 
 ## Battery holder (18650)
 
@@ -118,19 +118,33 @@ Design notes:
   cell is fitted (`springInstalledH`). It is assumed to be 3.5 mm above the plate;
   the cell length plus that figure and the 0.9 mm positive dome set the inner span.
 
-Files, in the parent project folder and not versioned in this repository:
+Files, versioned in this repository under `hardware/18650-holder/`:
 
 | File | Purpose |
 | --- | --- |
-| `NCR18650B/holder_18650_tight.stl` | Holder as designed |
-| `NCR18650B/holder_18650_tight_mirrored.stl` | Mirror image for the other half |
-| `NCR18650B/holder_18650_tight.mjs` | Parametric generator, Node and `manifold-3d` |
-| `NCR18650B/1_Batterie_2.0.stl` | Original tray, kept as a reference |
+| `holder_18650_tight.mjs` | Parametric generator, the source of truth |
+| `holder_18650_tight.stl` | Holder as designed |
+| `holder_18650_tight_mirrored.stl` | Mirror image for the other half |
+| `package.json` | Pins `manifold-3d` |
+
+`NCR18650B/1_Batterie_2.0.stl`, the original tray, stays in the parent project
+folder as a reference and is not versioned.
 
 Print with 0.2 mm layers, 4 to 5 perimeters so the 2 mm end walls come out solid,
 20 percent infill and a brim. No supports are needed: the seat ceilings are 1.0 mm
 ledges that bridge on their own.
 
+To change a dimension, edit the parameter block at the top of the generator and run:
+
+```bash
+cd hardware/18650-holder
+npm install
+npm run build
+```
+
+The script rewrites both STLs in place and prints the size, the mass and the derived
+dimensions, so a change is checked as soon as it is made. It needs Node 22 or newer
+because `manifold-3d` is an ES module.
 ## Parts ordered
 
 The following AliExpress items are part of the build. Product descriptions are not
