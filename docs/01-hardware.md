@@ -10,7 +10,7 @@
 | Controllers | 2 x nice!nano (nRF52840) |
 | Firmware | ZMK |
 | Interface | TRRS cable today, BLE split planned |
-| Power | USB today, LiPo battery per half planned |
+| Power | USB today, one 18650 per half planned (custom holder designed) |
 
 There are **23 switch positions per half**, not 24. The bottom row has five keys:
 the position at the bottom of the outer column is not populated on either half.
@@ -80,6 +80,56 @@ Thingiverse and live in the parent project folder under `files/`:
 | `bot_nomal.stl` | Bottom plate |
 | `pro_micro_adapter.stl` | Controller adapter |
 | `blankkeycap.STL` | Blank keycap |
+
+The battery holder in `NCR18650B/` is a custom design rather than a downloaded
+model. It is described in [Battery holder](#battery-holder-18650).
+
+## Battery holder (18650)
+
+The stock case carries a loose tray for one 18650 cell
+(`NCR18650B/1_Batterie_2.0.stl`). It was replaced with a parametric holder sized
+for the cell and for the two solder-tab terminals used in this build.
+
+| Item | Value |
+| --- | --- |
+| Cell | 1 x 18650 (NCR18650B), 18.5 x 65.8 mm |
+| Terminals | 9 x 9 mm spring plate (negative), 10 x 10 mm dome plate (positive), 0.4 mm thick, 4 mm solder tab with a through hole |
+| Size | 73.6 x 22.9 x 20.0 mm |
+| Cradle | Half cylinder, open above the cell axis |
+| Walls | 2.0 mm, floor under the cell 1.3 mm, flat base 7.9 mm wide |
+| End walls | 2.0 mm, one per terminal, full height to guide the tabs |
+| Seats | 9.4 x 9.4 mm (negative) and 10.4 x 10.4 mm (positive) square pockets, 1.0 mm deep |
+| Tab channel | 4.4 mm wide, 1.0 mm deep, exits through the top face of each end wall |
+| Inner span | 69.6 mm: cell 65.8 + spring 2.9 + dome 0.9 |
+| Mass | about 7 g of PLA |
+
+Design notes:
+
+- The seats are centred on the cell axis, so the cell itself presses each terminal
+  plate against its seat floor. No snap feature is needed, and the plates can be
+  removed by hand once the cell is out.
+- The plate sits 1.0 mm inside the end wall, so the solder joint is recessed and
+  cannot touch the cell. The tab channel keeps the positive tab from bending into
+  the cell can, which would short the cell.
+- The cradle stops at the cell axis. The cell drops straight in with no flex and is
+  closed with tape or heat shrink after soldering, so the holder does not retain
+  the cell on its own.
+- The only dimension that changes the holder length is the spring height once the
+  cell is fitted (`springInstalledH`). It is assumed to be 3.5 mm above the plate;
+  the cell length plus that figure and the 0.9 mm positive dome set the inner span.
+
+Files, in the parent project folder and not versioned in this repository:
+
+| File | Purpose |
+| --- | --- |
+| `NCR18650B/holder_18650_tight.stl` | Holder as designed |
+| `NCR18650B/holder_18650_tight_mirrored.stl` | Mirror image for the other half |
+| `NCR18650B/holder_18650_tight.mjs` | Parametric generator, Node and `manifold-3d` |
+| `NCR18650B/1_Batterie_2.0.stl` | Original tray, kept as a reference |
+
+Print with 0.2 mm layers, 4 to 5 perimeters so the 2 mm end walls come out solid,
+20 percent infill and a brim. No supports are needed: the seat ceilings are 1.0 mm
+ledges that bridge on their own.
 
 ## Parts ordered
 

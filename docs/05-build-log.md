@@ -3,6 +3,43 @@
 Newest entries first. Every entry records what was done, what was observed and what
 comes next. Failures are recorded with their cause and their fix.
 
+## 2026-10-23 — Custom 18650 battery holder
+
+**Done**
+
+- Measured the stock tray `NCR18650B/1_Batterie_2.0.stl` and replaced it with a
+  parametric holder generated from Node and `manifold-3d`: half-cylinder cradle,
+  2 mm walls, 18.9 mm bore, 73.6 x 22.9 x 20.0 mm, about 7 g of PLA.
+- Sized both end walls around the real solder-tab terminals: a 9.4 mm square pocket
+  for the 9 x 9 mm spring plate and a 10.4 mm one for the 10 x 10 mm dome plate,
+  1.0 mm deep, plus a 4.4 mm tab channel that exits through the top face of each
+  wall.
+- Cut the cradle at the cell axis so the cell drops in without flexing the plastic,
+  and closed each end wall to 2.0 mm to shorten the part by 4 mm.
+- Documented the design in [01-hardware.md](01-hardware.md#battery-holder-18650).
+
+**Observed**
+
+- Both STLs are closed and consistently oriented: 1620 triangles, 0 unmatched or
+  duplicated directed edges, 5629 mm3, bounding box 0,-11.45,0 to 73.60,11.45,20.00.
+- Ray probes confirm every critical dimension: 18.90 mm bore, 2.00 mm walls, the two
+  square seats at 9.40 and 10.40 mm, 4.40 mm channels, 1.00 mm of wall behind each
+  seat and a 10.75 mm tall cradle against a 20.00 mm end wall.
+- The first design, with a conical spring pocket and a closed cradle, was discarded
+  once the terminals were identified: they are plates, not round contacts.
+
+**Not done yet**
+
+- Nothing from this version has been printed yet.
+- The spring free height is still unmeasured, so the 3.5 mm installed height and
+  therefore the 73.6 mm length are assumptions. Shortening the holder further means
+  compressing the spring closer to its solid height.
+
+**Next**
+
+- Print the holder, check the terminal and cell fit, and close the cell with heat
+  shrink before wiring it to the nice!nano.
+
 ## 2026-10-21 — Split firmware and keymap v1.0
 
 **Done**
