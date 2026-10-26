@@ -147,15 +147,14 @@ dimensions, so a change is checked as soon as it is made. It needs Node 22 or ne
 because `manifold-3d` is an ES module.
 ## Parts ordered
 
-The following AliExpress items are part of the build. Product descriptions are not
-recorded here yet; fill them in when the orders are confirmed.
+The following AliExpress items are part of the build.
 
-| # | Link | Description |
-| --- | --- | --- |
-| 1 | https://www.aliexpress.com/item/1005012075849326.html | TBD |
-| 2 | https://www.aliexpress.com/item/1005007232040760.html | TBD |
-| 3 | https://www.aliexpress.com/item/1005008789715285.html | TBD |
-| 4 | https://www.aliexpress.com/item/1005007557383132.html | TBD |
+| # | Link | Description | Option / quantity |
+| --- | --- | --- | --- |
+| 1 | https://www.aliexpress.com/item/1005012075849326.html | 3-pin plastic tactile switch, replacement keyboard push buttons (sold in 20/50/100 pieces) | 100 pieces |
+| 2 | https://www.aliexpress.com/item/1005007232040760.html | Kailh hot-swap PCB socket for Outemu / Cherry MX mechanical keyboard switches (sold in 110/70 pieces) | 2 x 70 pieces |
+| 3 | https://www.aliexpress.com/item/1005008789715285.html | 1N4148 high-speed switching diodes, DO-35 package, new and original | 100 pieces |
+| 4 | https://www.aliexpress.com/item/1005007557383132.html | NRF52840 development board, Nice!Nano V2.0 compatible, Bluetooth, charge management, Pro Micro form factor | 2 pieces (same listing, one per half) |
 
 ## Keycaps and labels
 
