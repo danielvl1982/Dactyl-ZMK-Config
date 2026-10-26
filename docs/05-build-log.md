@@ -3,6 +3,25 @@
 Newest entries first. Every entry records what was done, what was observed and what
 comes next. Failures are recorded with their cause and their fix.
 
+## 2026-10-26 — Firmware power and Bluetooth settings built
+
+**Done**
+
+- Added `config/dactyl.conf` with deep sleep and split battery reporting, and the
+  `&bt` profile keys on `NAV` (commit `2bdfcf7`).
+
+**Observed**
+
+- GitHub Actions build on `2bdfcf7` finished green and produced both `.uf2` files.
+- Nothing has been flashed yet, so none of this is verified on hardware.
+
+**Pending**
+
+- Flash both halves and `settings_reset`, pair over BLE, verify every key and layer.
+- Fit the 18650 cells with cut-off switches and measure battery life.
+- Open items in Phase 1, 4 and 5 of the [roadmap](04-roadmap.md): AliExpress
+  descriptions, board check, layer and accent tests, trackball decision, labels.
+
 ## 2026-10-23 — Custom 18650 battery holder
 
 **Done**

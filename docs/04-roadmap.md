@@ -30,11 +30,12 @@ Today each half is an independent keyboard. The goal is one keymap that governs 
 - [ ] Fit one 18650 per half with a cut-off switch on the positive lead. The
       nice!nano charges the cell but has no low-voltage cut-off: switch off for
       storage and do not leave it discharging for weeks.
-- [ ] Enable `CONFIG_ZMK_SLEEP=y`: in `config/dactyl.conf`, not yet built.
-- [ ] Split battery reporting (`..._FETCHING` and `..._PROXY`): in
-      `config/dactyl.conf`, not yet built.
-- [ ] Bluetooth profile keys (`&bt BT_SEL 0..2`, `BT_CLR`) on `NAV`: in the keymap,
-      not yet built.
+- [x] Enable `CONFIG_ZMK_SLEEP=y` in `config/dactyl.conf`. CI build green on `2bdfcf7`;
+      not flashed yet.
+- [x] Split battery reporting (`..._FETCHING` and `..._PROXY`) in
+      `config/dactyl.conf`. CI build green on `2bdfcf7`; not flashed yet.
+- [x] Bluetooth profile keys (`&bt BT_SEL 0..2`, `BT_CLR`) on `NAV`. CI build green on
+      `2bdfcf7`; not flashed yet.
 - [ ] Flash `settings_reset` on both halves to clear stale bonds (`build.yaml`
       now builds it).
 - [ ] Pair the central half with the host and confirm both halves type over BLE.
