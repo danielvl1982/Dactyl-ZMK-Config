@@ -26,18 +26,21 @@ Today each half is an independent keyboard. The goal is one keymap that governs 
 
 ## Phase 3 â€” Battery and Bluetooth
 
-- [ ] Verify the TRRS pinout does not carry VCC between the halves.
-- [ ] Fit one LiPo per half.
-- [ ] Enable `CONFIG_ZMK_SLEEP=y`.
-- [ ] Optionally enable split battery reporting:
-      `CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING=y` and
-      `CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_PROXY=y`.
-- [ ] Flash `settings_reset` on both halves to clear stale bonds.
+- [x] Decision: no TRRS cable. The halves talk over BLE only, so no VCC is shared.
+- [ ] Fit one 18650 per half with a cut-off switch on the positive lead. The
+      nice!nano charges the cell but has no low-voltage cut-off: switch off for
+      storage and do not leave it discharging for weeks.
+- [ ] Enable `CONFIG_ZMK_SLEEP=y`: in `config/dactyl.conf`, not yet built.
+- [ ] Split battery reporting (`..._FETCHING` and `..._PROXY`): in
+      `config/dactyl.conf`, not yet built.
+- [ ] Bluetooth profile keys (`&bt BT_SEL 0..2`, `BT_CLR`) on `NAV`: in the keymap,
+      not yet built.
+- [ ] Flash `settings_reset` on both halves to clear stale bonds (`build.yaml`
+      now builds it).
 - [ ] Pair the central half with the host and confirm both halves type over BLE.
 - [ ] Measure battery life over a week.
 
-> Safety: with two batteries fitted, the TRRS cable must not connect VCC between the
-> halves. For a BLE split the cable is not needed at all.
+> Safety: the TRRS cable is not used, so the two batteries never share a rail.
 
 ## Phase 4 â€” Final keymap
 

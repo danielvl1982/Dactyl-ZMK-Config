@@ -1,5 +1,6 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
 
 /*
  * Keymap v1.0 for the Dactyl 4x6, see docs/03-keymap.md.
@@ -67,7 +68,7 @@
         /* L: ----- F6  F7  F8   F9   F10 */  /* R: LEFT  DOWN  UP    RIGHT ----- ----- */
                 &trans    &kp F6     &kp F7     &kp F8     &kp F9     &kp F10      &kp LEFT  &kp DOWN   &kp UP      &kp RIGHT    &trans      &trans
         /* L: ----- F11 F12 VOL- VOL+ MUTE*/  /* R: DEL   ----- ----- ----- ----- ----- */
-                &trans    &kp F11    &kp F12    &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &kp DEL &trans   &trans      &trans       &trans      &trans
+                &trans    &kp F11    &kp F12    &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &kp DEL &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_CLR &trans
         /* L: ----- PREV NEXT ----- ----- PLAY*/ /* R: ----- ----- ----- ----- ----- ----- */
                 &none     &kp C_PREV &kp C_NEXT &trans     &trans     &kp C_PP     &trans    &trans     &trans      &trans       &trans      &none
             >;

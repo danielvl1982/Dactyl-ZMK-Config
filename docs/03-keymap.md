@@ -128,7 +128,7 @@ Blank cells are `&trans`. `¡` and `'` live on `SYM`.
 +-------+-------+-------+-------+-------+-------+  +-------+-------+-------+-------+-------+-------+
 |       |  F6   |  F7   |  F8   |  F9   |  F10  |  | LEFT  | DOWN  |  UP   | RIGHT |       |       |
 +-------+-------+-------+-------+-------+-------+  +-------+-------+-------+-------+-------+-------+
-|       |  F11  |  F12  | VOL-  | VOL+  | MUTE  |  |  DEL  |       |       |       |       |       |
+|       |  F11  |  F12  | VOL-  | VOL+  | MUTE  |  |  DEL  | BT 0  | BT 1  | BT 2  |BT CLR |       |
 +-------+-------+-------+-------+-------+-------+  +-------+-------+-------+-------+-------+-------+
 |       | PREV  | NEXT  |       |       | PLAY  |  |       |       |       |       |       |       |
 +-------+-------+-------+-------+-------+-------+  +-------+-------+-------+-------+-------+-------+
@@ -136,6 +136,10 @@ Blank cells are `&trans`. `¡` and `'` live on `SYM`.
 
 `DEL` here is **forward Delete**, not Backspace. `BSPC` stays on the base layer and
 still works while `NAV` is held.
+
+`BT 0`..`BT 2` select one of three Bluetooth host profiles (for example PC, laptop,
+phone) and `BT CLR` clears the bond of the selected profile. They act on the central
+(left) half, which owns the host connection.
 
 ## SYM (hold outer-right row 1)
 
