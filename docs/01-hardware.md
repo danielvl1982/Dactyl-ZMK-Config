@@ -94,26 +94,32 @@ for the cell and for the two solder-tab terminals used in this build.
 | --- | --- |
 | Cell | 1 x 18650 (NCR18650B), 18.5 x 65.8 mm |
 | Terminals | 9 x 9 mm spring plate (negative), 10 x 10 mm dome plate (positive), 0.4 mm thick, 4 mm solder tab with a through hole |
-| Size | 73.6 x 22.9 x 20.0 mm |
+| Size | 73.6 x 22.9 x 17.75 mm (the cradle itself is 10.75 mm, the ears add the rest) |
 | Cradle | Half cylinder, open above the cell axis |
 | Walls | 2.0 mm, floor under the cell 1.3 mm, flat base 7.9 mm wide |
-| End walls | 2.0 mm, one per terminal, full height to guide the tabs |
+| End walls | 2.0 mm, one per terminal, trimmed flush with the cradle rim |
 | Seats | 9.4 x 9.4 mm (negative) and 10.4 x 10.4 mm (positive) square pockets, 1.0 mm deep |
-| Tab channel | 4.4 mm wide, 1.0 mm deep, exits through the top face of each end wall |
+| Ears | One per end wall, 11.8 mm (negative) and 12.8 mm (positive) wide, rising 2 mm above the plate |
+| Tab channel | As wide as the seat (9.4 / 10.4 mm), so it follows the plate square up through the ear; the folded tab lies in a 4.4 mm groove on the ear top |
+| Wire slot | 5.0 mm wide, 4.0 mm below the ear top, for the soldered wire and heat shrink |
 | Inner span | 69.6 mm: cell 65.8 + spring 2.9 + dome 0.9 |
-| Mass | about 7 g of PLA |
+| Mass | about 6.4 g of PLA |
 
 Design notes:
 
 - The seats are centred on the cell axis, so the cell itself presses each terminal
-  plate against its seat floor. No snap feature is needed, and the plates can be
-  removed by hand once the cell is out.
+  plate against its seat floor.
 - The plate sits 1.0 mm inside the end wall, so the solder joint is recessed and
-  cannot touch the cell. The tab channel keeps the positive tab from bending into
-  the cell can, which would short the cell.
+  cannot touch the cell. The walls now end at the cell axis, so each plate sits in a
+  half-pocket and its upper half stands above the rim: glue the plate to its seat
+  floor and wrap the assembly with tape or heat shrink before fitting the cell. With
+  the ears keep the tab from bending into the cell can.
+- `endWallAboveAxis` brings the walls back up if the holder is ever used unwrapped.
+  At the cell top (9.25 mm) the seat becomes a full pocket again and the tab channel
+  is cut automatically.
 - The cradle stops at the cell axis. The cell drops straight in with no flex and is
-  closed with tape or heat shrink after soldering, so the holder does not retain
-  the cell on its own.
+  closed with tape or heat shrink after soldering. A centered retaining ring was
+  tried and removed: it broke the first time the cell was inserted.
 - The only dimension that changes the holder length is the spring height once the
   cell is fitted (`springInstalledH`). It is assumed to be 3.5 mm above the plate;
   the cell length plus that figure and the 0.9 mm positive dome set the inner span.
@@ -145,6 +151,57 @@ npm run build
 The script rewrites both STLs in place and prints the size, the mass and the derived
 dimensions, so a change is checked as soon as it is made. It needs Node 22 or newer
 because `manifold-3d` is an ES module.
+## Switch button
+
+The power switch is a 7 x 7 x 14 mm push switch that came without its cap. It sits
+inside the case, so a printed cap gives it both a button and the reach to come out
+through the shell. The cap is a hollow shell: its socket receives the original
+square head and its flat top is pressed from outside. There is no extra spring —
+the square head keeps the cap aligned and the switch's own spring returns the
+travel.
+
+| Item | Value |
+| --- | --- |
+| Cap | 11.2 mm diameter, 12.0 mm tall |
+| Socket | 7.3 mm square, 1.5 mm corner radius, 4.0 mm deep |
+| Lead-in | 0.6 mm step, 0.8 mm wider, at the mouth |
+| Walls | 1.95 mm flat, 1.06 mm at the corners |
+| Mass | about 1.3 g of PLA |
+
+The socket is square, so the shell has to be wider than its diagonal
+(`switchW * 1.414`). A round cap narrower than that lets the socket corners break
+through the wall, which is why the generator reports the corner wall and refuses a
+`capD` that is too small. The rounded socket corners buy that margin and let the
+cap centre itself on the head instead of jamming on its corners.
+
+Two parameters depend on the build:
+
+- `switchW`: the square head across flats, measured with a caliper.
+- `capH`: total height, i.e. how far the cap has to stand out of the case.
+
+`socketClearance` sets the fit: 0.2-0.3 mm total for a press fit, more if the cap
+will be glued. Print one test piece before running a full plate.
+
+The STL is exported in print orientation: closed top on the bed and the socket
+opening up, so the cavity has no ceiling to bridge. Flip the part after printing.
+
+Files, versioned in this repository under `hardware/switch-button/`:
+
+| File | Purpose |
+| --- | --- |
+| `switch_cap.mjs` | Parametric generator, the source of truth |
+| `switch_cap.stl` | Cap as designed |
+| `package.json` | Pins `manifold-3d` |
+
+Print with 0.2 mm layers, 3 perimeters, 20 percent infill and a brim. No supports.
+To change a dimension, edit the parameter block and run:
+
+```bash
+cd hardware/switch-button
+npm install
+npm run build
+```
+
 ## Parts ordered
 
 The following AliExpress items are part of the build.
