@@ -58,12 +58,12 @@ const P = {
   seatClearance: 0.4, // total clearance of the seat around the plate
   seatDepth: 1.0,     // how deep the plate sits in the end wall
 
-  earAbovePlate: 0, // retaining ear: height above the plate top edge (0 = no ears)
+  earAbovePlate: 2, // retaining ear: height above the plate top edge (0 = no ears)
   earSide: 1.2,       // ear material either side of the tab slot
   tabGroove: 0.6,     // depth of the groove the folded-back tab lies in
   earChamfer: 0.6,    // chamfer on the long top edges of the ears (0 = sharp)
-  keyW: 1.5,         // central key slot in each seat floor: width (0 = none)
-  keyDepth: 0.6,     // central key slot: extra depth below the seat floor
+  wireSlotW: 2.0,     // central slot through each ear for the soldered wire: width (0 = none)
+  wireSlotDepth: 2.5, // wire slot depth below the ear top
 
   tabW: 4.0,        // tab width
   tabClearance: 0.4,
@@ -122,12 +122,6 @@ function terminalSeat(xFace, xDir, xBack, seat, plateHalf, seatDepth, tabSlotW, 
   const x0 = Math.min(xIn, xOut), x1 = Math.max(xIn, xOut);
   const h = seat / 2;
   let cut = box(x0, x1, -h, h, -h, h);
-  if (P.keyW > 0) {
-    // narrow vertical key slot in the seat floor: the pliers notch / glue bites here
-    const xFloor = xFace + xDir * seatDepth;  // real seat floor, inside the wall
-    const xKey = xFloor + xDir * P.keyDepth;
-    cut = cut.add(box(Math.min(xFloor, xKey), Math.max(xFloor, xKey), -P.keyW / 2, P.keyW / 2, -h, h));
-  }
   if (earTop > 0) {
     // slot above the plate: the tab rises through it
     cut = cut.add(box(x0, x1, -tabSlotW / 2, tabSlotW / 2, plateHalf, earTop + EPS));
@@ -135,6 +129,12 @@ function terminalSeat(xFace, xDir, xBack, seat, plateHalf, seatDepth, tabSlotW, 
     const xEnd = xBack + xDir * EPS;
     cut = cut.add(box(Math.min(xIn, xEnd), Math.max(xIn, xEnd), -tabSlotW / 2, tabSlotW / 2,
       earTop - P.tabGroove, earTop + EPS));
+    // central slot through the whole ear thickness: the soldered wire passes here
+    if (P.wireSlotW > 0) {
+      const xa = Math.min(xFace, xBack) - EPS, xb = Math.max(xFace, xBack) + EPS;
+      cut = cut.add(box(xa, xb, -P.wireSlotW / 2, P.wireSlotW / 2,
+        earTop - P.wireSlotDepth, earTop + EPS));
+    }
   }
   return cut;
 }
