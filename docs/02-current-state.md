@@ -61,6 +61,5 @@ not in the keymap (which would need every row written backwards, twice).
 
 - **Verified:** 23 keys per half, mirrored right half, ZMK builds and flashes on the
   left, matrix pins as documented in `01-hardware.md`.
-- **Assumed, to confirm:** that both nice!nano boards are identical and healthy, and
-  that the TRRS cable does not carry VCC between the halves. Confirm before fitting
-  two batteries.
+- **Assumed, to confirm:** that both nice!nano boards are identical and healthy.
+  The TRRS cable is not used, so the two batteries never share a rail.
