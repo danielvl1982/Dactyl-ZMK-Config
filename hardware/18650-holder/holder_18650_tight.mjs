@@ -46,6 +46,10 @@ const P = {
   rimAboveAxis: 0,  // cradle rim height above the cell axis (0 = half cradle)
   floorThick: 1.3, // material under the cell at the flat base
 
+  retainW: 4.0,      // centered half ring (retaining lips) width along the cell (0 = none)
+  retainAngle: 32,   // how far the lips climb above the cell axis, in degrees
+                     // opening = bore * cos(angle): 20 -> 17.8 mm, 32 -> 16.0 mm
+
   endNegThick: 2.0, // negative end wall (spring terminal)
   endPosThick: 2.0, // positive end wall (dome terminal)
   endWallAboveAxis: 0, // height the end walls reach above the cell axis
@@ -179,6 +183,19 @@ part = part.subtract(cylX(boreR, boreR, innerSpan, P.endNegThick));
 
 // Half cradle: open above the cell axis so the cell drops straight in
 part = part.subtract(box(P.endNegThick, L - P.endPosThick, -50, 50, P.rimAboveAxis, 50));
+
+// Centered half ring: two lips that wrap just past the cell axis so the cell
+// snaps in and cannot fall out. The opening between the lips is narrower than the cell.
+if (P.retainW > 0) {
+  const lipZ = boreR * Math.sin((P.retainAngle * Math.PI) / 180);
+  const xc = L / 2 - P.retainW / 2;
+  const lips = cylX(outerR, outerR, P.retainW, xc)
+    .subtract(cylX(boreR, boreR, P.retainW + 2 * EPS, xc - EPS))
+    .intersect(box(xc - EPS, xc + P.retainW + EPS, -50, 50, 0, lipZ));
+  part = part.add(lips);
+  console.log('retain ring : %s mm wide, lips to %s mm above axis, opening %s mm vs cell %s',
+    P.retainW, lipZ.toFixed(2), (2 * Math.sqrt(boreR ** 2 - lipZ ** 2)).toFixed(2), P.cellD);
+}
 
 // Negative end wall: seat for the 9x9 spring terminal
 part = part.subtract(
