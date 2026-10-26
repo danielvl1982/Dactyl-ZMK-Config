@@ -16,3 +16,7 @@ node_modules/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Local tooling and scratch work
+.atl/
+work/
