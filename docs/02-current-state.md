@@ -1,6 +1,6 @@
 # Current state
 
-Last updated: 2026-10-21
+Last updated: 2026-10-26
 
 ## What works
 
@@ -53,8 +53,8 @@ not in the keymap (which would need every row written backwards, twice).
 | Gap | Detail |
 | --- | --- |
 | Not flashed | The split configuration and the v1.0 keymap exist only in `main`; only the old 24-position test keymap has run on hardware. |
-| No battery | Powered over USB. Each half needs its own LiPo for BLE operation. |
-| Cable | The halves are joined by a TRRS cable. It will not be used once the BLE split is configured. |
+| No battery | Powered over USB. Each half needs its own 18650 for BLE operation. The holder and the switch cap are designed and versioned, not printed or tested. |
+| Cable | The halves may still be joined by a TRRS cable. It will not be used: the split runs over BLE only. |
 | No labels | Keycaps are blank; the stickers will be ordered after the mapping is fixed. |
 
 ## Verified vs assumed

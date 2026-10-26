@@ -22,7 +22,31 @@ comes next. Failures are recorded with their cause and their fix.
 - Open items in Phase 1, 4 and 5 of the [roadmap](04-roadmap.md): AliExpress
   descriptions, board check, layer and accent tests, trackball decision, labels.
 
+## 2026-10-26 — Holder redesign and switch cap
+
+**Done**
+
+- Holder: end walls trimmed flush with the cradle rim (cradle 10.75 mm), retaining
+  ears over each end wall (overall 17.75 mm), tab channel as wide as the plate seat
+  (9.4 / 10.4 mm), wire slot opened to 5.0 mm wide and 4.0 mm deep, about 6.4 g.
+- Tried a centered half ring so the cell would snap in. It broke the first time the
+  cell was inserted, so it was removed.
+- Added the parametric switch cap generator in `hardware/switch-button/`.
+- Battery decision: six cells go to three Dactyl builds; the 4S board is retired.
+
+**Observed**
+
+- Generated meshes report `NoError`. The new holder and the switch cap have not been
+  printed or fitted yet.
+
+**Pending**
+
+- Print and test both parts, then close the cell with tape or heat shrink.
+
 ## 2026-10-23 — Custom 18650 battery holder
+
+> Superseded on 2026-10-26: the dimensions and the tab channel below changed.
+
 
 **Done**
 

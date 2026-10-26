@@ -7,7 +7,7 @@ Ordered list of what is left. Tick a box only with evidence in the
 
 - [x] Create `README.md` and the `docs/` folder.
 - [x] Record the hardware, the current state, the mapping and the plan.
-- [ ] Fill in the four AliExpress product descriptions in `01-hardware.md`.
+- [x] Fill in the four AliExpress product descriptions in `01-hardware.md` ("Parts ordered").
 - [ ] Confirm that both nice!nano boards are identical and healthy.
 
 ## Phase 2 â€” Turn the two halves into one split
@@ -27,9 +27,17 @@ Today each half is an independent keyboard. The goal is one keymap that governs 
 ## Phase 3 â€” Battery and Bluetooth
 
 - [x] Decision: no TRRS cable. The halves talk over BLE only, so no VCC is shared.
+- [x] Design the 18650 holder (`hardware/18650-holder/`) and the switch cap
+      (`hardware/switch-button/`). Generated and versioned; neither is printed or
+      tested yet.
+- [ ] Print and test the holder: cell drops in, plates seat in their pockets, solder
+      joints and heat shrink fit the wire slot.
+- [ ] Print and test the switch cap on the 7 x 7 x 14 mm switch.
 - [ ] Fit one 18650 per half with a cut-off switch on the positive lead. The
       nice!nano charges the cell but has no low-voltage cut-off: switch off for
       storage and do not leave it discharging for weeks.
+- [ ] Build the other two keyboards later with the spare cells; the 4S board is
+      retired (a 4S boost charger is unsafe for single 18650 cells).
 - [x] Enable `CONFIG_ZMK_SLEEP=y` in `config/dactyl.conf`. CI build green on `2bdfcf7`;
       not flashed yet.
 - [x] Split battery reporting (`..._FETCHING` and `..._PROXY`) in

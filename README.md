@@ -6,6 +6,7 @@ ZMK on nice!nano controllers. The keymap targets a **Spanish (ES) host layout** 
 
 **Status:** work in progress. One half flashes and types with a test keymap. The
 split, Bluetooth link, batteries and the final Spanish keymap are still pending.
+The 18650 holder and the switch cap are designed (`hardware/`) but not printed yet.
 
 ## Quick facts
 
