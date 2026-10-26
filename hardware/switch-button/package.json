@@ -1,0 +1,13 @@
+{
+  "name": "dactyl-switch-button",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Parametric plunger cap for the 7x7x14 mm push switch on the Dactyl 4x6 case",
+  "scripts": {
+    "build": "node switch_cap.mjs"
+  },
+  "dependencies": {
+    "manifold-3d": "^3.5.4"
+  }
+}
