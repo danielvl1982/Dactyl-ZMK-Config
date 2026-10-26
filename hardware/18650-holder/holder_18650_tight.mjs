@@ -46,10 +46,6 @@ const P = {
   rimAboveAxis: 0,  // cradle rim height above the cell axis (0 = half cradle)
   floorThick: 1.3, // material under the cell at the flat base
 
-  retainW: 4.0,      // centered half ring (retaining lips) width along the cell (0 = none)
-  retainAngle: 32,   // how far the lips climb above the cell axis, in degrees
-                     // opening = bore * cos(angle): 20 -> 17.8 mm, 32 -> 16.0 mm
-
   endNegThick: 2.0, // negative end wall (spring terminal)
   endPosThick: 2.0, // positive end wall (dome terminal)
   endWallAboveAxis: 0, // height the end walls reach above the cell axis
@@ -66,8 +62,8 @@ const P = {
   earSide: 1.2,       // ear material either side of the tab slot
   tabGroove: 0.6,     // depth of the groove the folded-back tab lies in
   earChamfer: 0.6,    // chamfer on the long top edges of the ears (0 = sharp)
-  wireSlotW: 2.0,     // central slot through each ear for the soldered wire: width (0 = none)
-  wireSlotDepth: 2.5, // wire slot depth below the ear top
+  wireSlotW: 5.0,     // central slot through each ear for the soldered wire: width (0 = none)
+  wireSlotDepth: 4.0, // wire slot depth below the ear top
 
   tabW: 4.0,        // tab width
   tabClearance: 0.4,
@@ -99,7 +95,8 @@ const L = P.endNegThick + innerSpan + P.endPosThick;
 const seatNeg = P.negPlate + P.seatClearance;
 const seatPos = P.posPlate + P.seatClearance;
 const tabSlotW = P.tabW + P.tabClearance;
-const earW = tabSlotW + 2 * P.earSide;
+const earWNeg = seatNeg + 2 * P.earSide; // ear as wide as the plate seat + side material
+const earWPos = seatPos + 2 * P.earSide;
 
 const wasm = await Module();
 wasm.setup();
@@ -121,6 +118,7 @@ const box = (x0, x1, y0, y1, z0, z1) =>
  *  xDir : +1 if the wall lies at larger x than the pocket, -1 otherwise
  *  xBack: x of the outer (back) face of the wall */
 function terminalSeat(xFace, xDir, xBack, seat, plateHalf, seatDepth, tabSlotW, earTop) {
+  // the channel above the plate is as wide as the seat, so it follows the plate square
   const xIn = xFace - xDir * seatDepth;      // pocket floor
   const xOut = xFace + xDir * EPS;           // overshoot into the bore
   const x0 = Math.min(xIn, xOut), x1 = Math.max(xIn, xOut);
@@ -128,7 +126,7 @@ function terminalSeat(xFace, xDir, xBack, seat, plateHalf, seatDepth, tabSlotW, 
   let cut = box(x0, x1, -h, h, -h, h);
   if (earTop > 0) {
     // slot above the plate: the tab rises through it
-    cut = cut.add(box(x0, x1, -tabSlotW / 2, tabSlotW / 2, plateHalf, earTop + EPS));
+    cut = cut.add(box(x0, x1, -seat / 2, seat / 2, plateHalf, earTop + EPS));
     // groove along the ear top, from the slot out past the back face
     const xEnd = xBack + xDir * EPS;
     cut = cut.add(box(Math.min(xIn, xEnd), Math.max(xIn, xEnd), -tabSlotW / 2, tabSlotW / 2,
@@ -144,8 +142,8 @@ function terminalSeat(xFace, xDir, xBack, seat, plateHalf, seatDepth, tabSlotW, 
 }
 
 /** Retaining ear over a whole end wall thickness, from the rim up to earTop. */
-const ear = (xA, xB, earTop) =>
-  box(Math.min(xA, xB), Math.max(xA, xB), -earW / 2, earW / 2, -1, earTop);
+const ear = (xA, xB, earTop, w) =>
+  box(Math.min(xA, xB), Math.max(xA, xB), -w / 2, w / 2, -1, earTop);
 
 // ---------------------------------------------------------------------------
 // Solid
@@ -165,11 +163,11 @@ part = part.subtract(box(P.endNegThick, L - P.endPosThick, -50, 50, P.rimAboveAx
 const earTopNeg = P.earAbovePlate > 0 ? P.negPlate / 2 + P.earAbovePlate : 0;
 const earTopPos = P.earAbovePlate > 0 ? P.posPlate / 2 + P.earAbovePlate : 0;
 if (P.earAbovePlate > 0) {
-  part = part.add(ear(0, P.endNegThick, earTopNeg)).add(ear(L - P.endPosThick, L, earTopPos));
+  part = part.add(ear(0, P.endNegThick, earTopNeg, earWNeg)).add(ear(L - P.endPosThick, L, earTopPos, earWPos));
   if (P.earChamfer > 0) {
     // 45 degree chamfer on the two long top edges of each ear
     const s = P.earChamfer * Math.SQRT2;
-    for (const [xA, xB, zTop] of [[0, P.endNegThick, earTopNeg], [L - P.endPosThick, L, earTopPos]]) {
+    for (const [xA, xB, zTop, earW] of [[0, P.endNegThick, earTopNeg, earWNeg], [L - P.endPosThick, L, earTopPos, earWPos]]) {
       for (const y of [-earW / 2, earW / 2]) {
         part = part.subtract(
           Manifold.cube([xB - xA + 2 * EPS, s, s], true).rotate([45, 0, 0]).translate([(xA + xB) / 2, y, zTop]));
@@ -183,19 +181,6 @@ part = part.subtract(cylX(boreR, boreR, innerSpan, P.endNegThick));
 
 // Half cradle: open above the cell axis so the cell drops straight in
 part = part.subtract(box(P.endNegThick, L - P.endPosThick, -50, 50, P.rimAboveAxis, 50));
-
-// Centered half ring: two lips that wrap just past the cell axis so the cell
-// snaps in and cannot fall out. The opening between the lips is narrower than the cell.
-if (P.retainW > 0) {
-  const lipZ = boreR * Math.sin((P.retainAngle * Math.PI) / 180);
-  const xc = L / 2 - P.retainW / 2;
-  const lips = cylX(outerR, outerR, P.retainW, xc)
-    .subtract(cylX(boreR, boreR, P.retainW + 2 * EPS, xc - EPS))
-    .intersect(box(xc - EPS, xc + P.retainW + EPS, -50, 50, 0, lipZ));
-  part = part.add(lips);
-  console.log('retain ring : %s mm wide, lips to %s mm above axis, opening %s mm vs cell %s',
-    P.retainW, lipZ.toFixed(2), (2 * Math.sqrt(boreR ** 2 - lipZ ** 2)).toFixed(2), P.cellD);
-}
 
 // Negative end wall: seat for the 9x9 spring terminal
 part = part.subtract(
@@ -225,7 +210,7 @@ console.log('end walls   : %s mm thick, to %s mm above the cell axis (%s)',
   P.endNegThick.toFixed(2), topZ.toFixed(2), topZ === 0 ? 'flush with the rim' : 'enclosed');
 console.log('seats       : neg %s | pos %s mm square, %s deep', seatNeg.toFixed(2), seatPos.toFixed(2), P.seatDepth);
 console.log('ears        : %s', P.earAbovePlate > 0
-  ? `${earW.toFixed(1)} mm wide, to ${earTopNeg.toFixed(1)} (neg) / ${earTopPos.toFixed(1)} (pos) mm above the axis, tab slot ${tabSlotW.toFixed(1)} mm`
+  ? `${earWNeg.toFixed(1)} (neg) / ${earWPos.toFixed(1)} (pos) mm wide, to ${earTopNeg.toFixed(1)} (neg) / ${earTopPos.toFixed(1)} (pos) mm above the axis, channel = seat width (${seatNeg.toFixed(1)} / ${seatPos.toFixed(1)} mm)`
   : 'none');
 
 // ---------------------------------------------------------------------------
