@@ -58,12 +58,18 @@ const P = {
   seatClearance: 0.4, // total clearance of the seat around the plate
   seatDepth: 1.0,     // how deep the plate sits in the end wall
 
-  earAbovePlate: 2, // retaining ear: height above the plate top edge (0 = no ears)
+  roundEnds: true,  // end walls stay full discs (no flush trim, no flat ears): the printed
+                    // ears snapped under terminal pressure. The tab channel and the wire
+                    // slot are still cut through the top of the disc.
+  channelDepth: 1.5, // round ends: depth of the tab channel above the plate (the seat stays seatDepth);
+                     // the wall is endThick 2.0, so this leaves 2.0 - channelDepth behind it
+  earAbovePlate: 2, // retaining ear (only used when roundEnds is false): height above the plate top edge (0 = no ears)
   earSide: 1.2,       // ear material either side of the tab slot
   tabGroove: 0.6,     // depth of the groove the folded-back tab lies in
   earChamfer: 0.6,    // chamfer on the long top edges of the ears (0 = sharp)
   wireSlotW: 5.0,     // central slot through each ear for the soldered wire: width (0 = none)
-  wireSlotDepth: 4.0, // wire slot depth below the ear top
+  wireSlotDepth: 4.0, // wire slot depth below the ear top (round ends: the slot runs down to
+                      // the cradle rim instead, so the wire lands in the half pipe)
 
   tabW: 4.0,        // tab width
   tabClearance: 0.4,
@@ -83,7 +89,7 @@ const P = {
 const boreR = (P.cellD + P.clearance) / 2;
 const outerR = boreR + P.wall;
 const baseZ = -(boreR + P.floorThick); // flat bottom plane
-const topZ = P.endWallAboveAxis;       // end walls stop here, flush with the rim at 0
+const topZ = P.roundEnds ? outerR : P.endWallAboveAxis; // end walls stop here, flush with the rim at 0
 
 // How far each terminal protrudes past the wall face towards the cell
 const plateBack = P.seatDepth - P.plateThick;          // plate face behind the wall face
@@ -117,7 +123,7 @@ const box = (x0, x1, y0, y1, z0, z1) =>
  *  xFace: x of the wall face (pocket opens towards the cell, opposite to xDir)
  *  xDir : +1 if the wall lies at larger x than the pocket, -1 otherwise
  *  xBack: x of the outer (back) face of the wall */
-function terminalSeat(xFace, xDir, xBack, seat, plateHalf, seatDepth, tabSlotW, earTop) {
+function terminalSeat(xFace, xDir, xBack, seat, plateHalf, seatDepth, tabSlotW, earTop, channelW = seat) {
   // the channel above the plate is as wide as the seat, so it follows the plate square
   const xIn = xFace - xDir * seatDepth;      // pocket floor
   const xOut = xFace + xDir * EPS;           // overshoot into the bore
@@ -126,7 +132,10 @@ function terminalSeat(xFace, xDir, xBack, seat, plateHalf, seatDepth, tabSlotW, 
   let cut = box(x0, x1, -h, h, -h, h);
   if (earTop > 0) {
     // slot above the plate: the tab rises through it
-    cut = cut.add(box(x0, x1, -seat / 2, seat / 2, plateHalf, earTop + EPS));
+    // xDir points from the pocket into the wall, so the channel floor is at xFace + xDir * depth
+    const cIn = P.roundEnds ? xFace + xDir * P.channelDepth : xIn;
+    const cOut = P.roundEnds ? xFace - xDir * EPS : xOut;
+    cut = cut.add(box(Math.min(cIn, cOut), Math.max(cIn, cOut), -channelW / 2, channelW / 2, plateHalf, earTop + EPS));
     // groove along the ear top, from the slot out past the back face
     const xEnd = xBack + xDir * EPS;
     cut = cut.add(box(Math.min(xIn, xEnd), Math.max(xIn, xEnd), -tabSlotW / 2, tabSlotW / 2,
@@ -135,7 +144,7 @@ function terminalSeat(xFace, xDir, xBack, seat, plateHalf, seatDepth, tabSlotW, 
     if (P.wireSlotW > 0) {
       const xa = Math.min(xFace, xBack) - EPS, xb = Math.max(xFace, xBack) + EPS;
       cut = cut.add(box(xa, xb, -P.wireSlotW / 2, P.wireSlotW / 2,
-        earTop - P.wireSlotDepth, earTop + EPS));
+        P.roundEnds ? P.rimAboveAxis : earTop - P.wireSlotDepth, earTop + EPS));
     }
   }
   return cut;
@@ -153,16 +162,18 @@ let part = cylX(outerR, outerR, L, 0);
 // Flat bottom: the part sits on the bed / case floor
 part = part.subtract(box(-EPS, L + EPS, -50, 50, -50, baseZ));
 
-// End walls trimmed flush with the cradle rim
-part = part.subtract(box(-EPS, P.endNegThick, -50, 50, topZ, 50));
-part = part.subtract(box(L - P.endPosThick, L + EPS, -50, 50, topZ, 50));
+// End walls trimmed flush with the cradle rim (round ends keep the full disc)
+if (!P.roundEnds) {
+  part = part.subtract(box(-EPS, P.endNegThick, -50, 50, topZ, 50));
+  part = part.subtract(box(L - P.endPosThick, L + EPS, -50, 50, topZ, 50));
+}
 // Cradle sides between the end walls stop at the rim
 part = part.subtract(box(P.endNegThick, L - P.endPosThick, -50, 50, P.rimAboveAxis, 50));
 
 // Retaining ears (added after the trim, before the seats are cut)
-const earTopNeg = P.earAbovePlate > 0 ? P.negPlate / 2 + P.earAbovePlate : 0;
-const earTopPos = P.earAbovePlate > 0 ? P.posPlate / 2 + P.earAbovePlate : 0;
-if (P.earAbovePlate > 0) {
+const earTopNeg = P.roundEnds ? outerR : P.earAbovePlate > 0 ? P.negPlate / 2 + P.earAbovePlate : 0;
+const earTopPos = P.roundEnds ? outerR : P.earAbovePlate > 0 ? P.posPlate / 2 + P.earAbovePlate : 0;
+if (!P.roundEnds && P.earAbovePlate > 0) {
   part = part.add(ear(0, P.endNegThick, earTopNeg, earWNeg)).add(ear(L - P.endPosThick, L, earTopPos, earWPos));
   if (P.earChamfer > 0) {
     // 45 degree chamfer on the two long top edges of each ear
@@ -184,12 +195,12 @@ part = part.subtract(box(P.endNegThick, L - P.endPosThick, -50, 50, P.rimAboveAx
 
 // Negative end wall: seat for the 9x9 spring terminal
 part = part.subtract(
-  terminalSeat(P.endNegThick, -1, 0, seatNeg, P.negPlate / 2, P.seatDepth, tabSlotW, earTopNeg),
+  terminalSeat(P.endNegThick, -1, 0, seatNeg, P.negPlate / 2, P.seatDepth, tabSlotW, earTopNeg, P.roundEnds ? tabSlotW : seatNeg),
 );
 
 // Positive end wall: seat for the 10x10 dome terminal
 part = part.subtract(
-  terminalSeat(L - P.endPosThick, +1, L, seatPos, P.posPlate / 2, P.seatDepth, tabSlotW, earTopPos),
+  terminalSeat(L - P.endPosThick, +1, L, seatPos, P.posPlate / 2, P.seatDepth, tabSlotW, earTopPos, P.roundEnds ? tabSlotW : seatPos),
 );
 
 // Sit on the bed
@@ -209,7 +220,7 @@ console.log('inner span  : %s mm (cell %s + spring %s + dome %s)', innerSpan.toF
 console.log('end walls   : %s mm thick, to %s mm above the cell axis (%s)',
   P.endNegThick.toFixed(2), topZ.toFixed(2), topZ === 0 ? 'flush with the rim' : 'enclosed');
 console.log('seats       : neg %s | pos %s mm square, %s deep', seatNeg.toFixed(2), seatPos.toFixed(2), P.seatDepth);
-console.log('ears        : %s', P.earAbovePlate > 0
+console.log('ears        : %s', P.roundEnds ? `none, round end discs (tab channel ${tabSlotW.toFixed(1)} wide, ${P.channelDepth} deep)` : P.earAbovePlate > 0
   ? `${earWNeg.toFixed(1)} (neg) / ${earWPos.toFixed(1)} (pos) mm wide, to ${earTopNeg.toFixed(1)} (neg) / ${earTopPos.toFixed(1)} (pos) mm above the axis, channel = seat width (${seatNeg.toFixed(1)} / ${seatPos.toFixed(1)} mm)`
   : 'none');
 
