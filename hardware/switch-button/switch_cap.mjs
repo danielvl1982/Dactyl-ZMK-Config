@@ -46,9 +46,15 @@ const P = {
   leadIn: 0.6,           // relieved step at the mouth so the cap starts onto the head
   leadInPlay: 0.8,       // how much wider that step is, across
 
-  // Cap body
-  capD: 11.2,            // outer diameter; must clear the socket diagonal
-  capH: 12.0,            // MEASURE: total height, i.e. how far it must stand out of the case
+  // Cap body: a wide base that holds the square socket (stays inside the case)
+  // plus a narrow stem that slides through the case hole
+  capD: 11.2,            // base outer diameter; must clear the socket diagonal
+  capH: 16.0,            // MEASURE: total height, i.e. how far it must stand out of the case
+
+  // Stem that passes through the hole in the case
+  holeD: 6.1,            // MEASURED: TRRS jack hole in pro_micro_adapter.stl
+  stemClearance: 0.3,    // total play in the hole (0.15/side) so it slides in and out
+  stemH: 8.0,            // straight stem: 1.9 wall + 4 out + spare for travel and glue
 
   segments: 96,
   outBase: 'switch_cap',
@@ -64,6 +70,10 @@ const socketDiagonal = Math.SQRT2 * (socketApothem - cornerR) + cornerR;
 const wallFlat = P.capD / 2 - socketApothem;
 const wallCorner = P.capD / 2 - socketDiagonal;
 const topThick = P.capH - P.socketDepth;
+const stemD = P.holeD - P.stemClearance;
+const flareH = (P.capD - stemD) / 2;                  // 45 deg flare: prints without supports
+const baseZ = P.stemH + flareH;                       // where the full-width base starts
+const socketFloorZ = P.capH - P.socketDepth;
 
 const EPS = 1.0;
 
@@ -88,7 +98,10 @@ const roundedSquare = (s, r, h, z0) => {
 // ---------------------------------------------------------------------------
 // Solid - print orientation (closed top on the bed, socket opening up)
 // ---------------------------------------------------------------------------
-let part = cyl(P.capD / 2, P.capH, 0);
+// Stem on the bed, 45 deg flare, then the full-width base that holds the socket
+let part = cyl(stemD / 2, P.stemH + EPS, 0)
+  .add(Manifold.cylinder(flareH, stemD / 2, P.capD / 2, P.segments, false).translate([0, 0, P.stemH]))
+  .add(cyl(P.capD / 2, P.capH - baseZ, baseZ));
 
 // Socket: open counterbore from the top face
 const socketZ = P.capH - P.socketDepth;
@@ -112,6 +125,8 @@ console.log('status        :', part.status());
 console.log('size          : %s x %s x %s mm', ...size.map((v) => v.toFixed(2)));
 console.log('volume        : %s mm3 (~%s g PLA)', part.volume().toFixed(0), (part.volume() * 0.00124).toFixed(2));
 console.log('cap           : %s mm dia, %s mm tall', P.capD.toFixed(2), P.capH.toFixed(2));
+console.log('stem          : %s mm dia (hole %s), %s mm straight, then %s mm flare',
+  stemD.toFixed(2), P.holeD.toFixed(2), P.stemH.toFixed(2), flareH.toFixed(2));
 console.log('socket        : %s mm square, corner R%s, %s mm deep',
   socket.toFixed(2), cornerR.toFixed(2), P.socketDepth.toFixed(2));
 console.log('lead-in       : %s mm step, %s mm wider, at the mouth', P.leadIn.toFixed(2), P.leadInPlay.toFixed(2));
@@ -120,6 +135,9 @@ console.log('wall          : %s mm flat, %s mm at the corners', wallFlat.toFixed
 const problems = [];
 if (wallCorner < 0.8) {
   problems.push(`corner wall is ${wallCorner.toFixed(2)} mm: the ${socket.toFixed(1)} mm socket diagonal does not fit a ${P.capD} mm shell, raise capD to at least ${((socketDiagonal + 0.8) * 2).toFixed(1)}`);
+}
+if (baseZ > socketFloorZ - 0.6) {
+  problems.push(`flare ends at ${baseZ.toFixed(2)} mm but the socket floor is at ${socketFloorZ.toFixed(2)} mm: shorten stemH or raise capH`);
 }
 if (topThick < 1.2) problems.push(`top is only ${topThick.toFixed(2)} mm thick: raise capH or lower socketDepth`);
 if (P.socketDepth < P.switchW * 0.4) problems.push(`socket ${P.socketDepth} mm is shallow for a ${P.switchW} mm head, the cap will rock`);
