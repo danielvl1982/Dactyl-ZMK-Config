@@ -1,0 +1,48 @@
+schema: spec-driven
+project: Dactyl-ZMK-Config
+persistence: hybrid   # openspec files + engram (project key: Dactyl-ZMK-Config)
+
+context: |
+  ZMK firmware configuration for a hand-wired Dactyl Manuform 4x6 split keyboard (nice!nano / nRF52840,
+  BLE split, left half = central, trackball planned on the right half), plus parametric 3D-printable
+  hardware parts (18650 battery holder, switch cap). Firmware is built in GitHub Actions; no local build.
+  Solution/workspace: config/west.yml (west manifest, self path `config`, imports zmkfirmware/zmk `app/west.yml`, revision `main`).
+  Projects/modules:
+    config/                             (ZMK user config: dactyl.keymap, dactyl.conf, west.yml)
+    config/boards/shields/dactyl/       (custom shield: dactyl.dtsi, dactyl_left/right.overlay, Kconfig.shield, Kconfig.defconfig, dactyl.zmk.yml)
+    build.yaml                          (CI matrix: nice_nano//zmk with dactyl_left, dactyl_right, settings_reset)
+    .github/workflows/build.yml         (reusable zmkfirmware/zmk build-user-config.yml@main)
+    hardware/18650-holder/              (Node ESM generator, manifold-3d ^3.5.4, `npm run build` -> holder_18650_tight*.stl)
+    hardware/switch-button/             (Node ESM generator, manifold-3d ^3.5.4, `npm run build` -> switch_cap.stl)
+    hardware/third-party/               (third-party STL parts with attribution and licenses)
+    docs/01..05, docs/README.md         (hand-written project docs, kept as-is)
+    work/                               (git-ignored local scratch)
+  Conventions: devicetree overlays + Kconfig for the shield; keymap targets a Spanish (ES) host layout
+  (AltGr symbols as RA(...), dead keys via macros); layer order base=0, num=1, nav=2, sym=3; conventional commits.
+  Known findings: west.yml tracks zmk `main` and the workflow is pinned to `@main` (no reproducible pin);
+  no secrets detected.
+  Docs language: English. Code, identifiers and test names: English.
+
+strict_tdd: false   # no runnable test command exists
+
+testing:
+  runner:
+    command: none detected
+    framework: none detected
+  layers:
+    unit: none
+    integration: none
+    e2e: none   # validation is flashing the .uf2 artifacts from CI onto the hardware
+  coverage:
+    available: false
+    tool: none
+    command: none
+  assertions: none
+  mocking: none
+  linter: none detected
+  formatter: none detected
+
+rules:
+  proposal: [no behavior change unless explicitly authorized]
+  tasks: [keymap changes must be mirrored in docs/03-keymap.md in the same commit, firmware cannot be verified without flashing hardware]
+  apply: [do not edit hand-written docs/01..05 beyond the update rules in docs/README.md]
