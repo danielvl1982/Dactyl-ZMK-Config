@@ -4,9 +4,12 @@ A hand-wired Dactyl Manuform 4x6 split with a trackball on the right half, runni
 ZMK on nice!nano controllers. The keymap targets a **Spanish (ES) host layout** with
 `Ñ`, accents and numbers on a function layer.
 
-**Status:** work in progress. One half flashes and types with a test keymap. The
-split, Bluetooth link, batteries and the final Spanish keymap are still pending.
-The 18650 holder and the switch cap are designed (`hardware/`) but not printed yet.
+**Status:** work in progress. Both halves were flashed and type over USB with a test
+keymap. The split firmware, the v1.0 Spanish keymap (four layers), Bluetooth profile
+keys, battery reporting and deep sleep (5 min) are in `main` and compile in CI, but
+have not been flashed or verified on hardware yet. The 18650 holder and the switch
+cap are designed (`hardware/`) but not printed yet. See
+[docs/02-current-state.md](docs/02-current-state.md).
 
 ## Quick facts
 
@@ -51,16 +54,23 @@ Reference derived from the code (every claim cites `file:line`):
 
 ```
 config/
-  dactyl_left.keymap                  # current keymap (test map A-X)
-  boards/shields/dactyl_left/
-    dactyl_left.overlay               # matrix, pins and transform
-    dactyl_left.zmk.yml               # shield metadata
-    Kconfig.defconfig                 # shield Kconfig
+  dactyl.keymap                       # v1.0 keymap (base, NUM, NAV, SYM layers)
+  dactyl.conf                         # sleep, battery reporting, Windows BLE workaround
+  west.yml                            # ZMK manifest
+  boards/shields/dactyl/
+    dactyl.dtsi                       # matrix and shared transform
+    dactyl_left.overlay               # left half pins (central)
+    dactyl_right.overlay              # right half pins (col-offset 6)
+    dactyl.zmk.yml                    # shield metadata
+    Kconfig.defconfig                 # roles and keyboard name
     Kconfig.shield
 hardware/
   18650-holder/                       # parametric battery holder (generator + STLs)
+  switch-button/                      # parametric switch cap (generator + STL)
+  third-party/                        # third-party STL parts with attribution
 build.yaml                            # GitHub Actions build targets
 docs/                                 # project documentation
+openspec/                             # baseline spec per feature
 ```
 
 The QMK port (`src/`), the case and keycap models (`files/`), the original battery
