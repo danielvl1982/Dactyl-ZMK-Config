@@ -1,0 +1,43 @@
+{
+  "framework_version": "1.0",
+  "project": "Dactyl-ZMK-Config",
+  "docs_language": "en",
+  "documented_commit": "a7ec066b49acc1d44d727d7f6b5e6d1b295899f7",
+  "updated_at": "2026-10-28",
+  "state": {
+    "mode": "baseline",
+    "codegraph": "available",
+    "sdd": {
+      "openspec_config": "openspec/config.yaml",
+      "odd_logbooks": ["odd/tasks/docs-baseline.md"],
+      "other_sdd": null
+    },
+    "gaps": [],
+    "stale": []
+  },
+  "sections": {
+    "arquitectura": { "path": "docs/arquitectura.md", "commit": "a7ec066" },
+    "datos": { "path": "docs/datos.md", "commit": "a7ec066" },
+    "configuracion": { "path": "docs/configuracion.md", "commit": "a7ec066" },
+    "operaciones": { "path": "docs/operaciones.md", "commit": "a7ec066" }
+  },
+  "references": [],
+  "features": [
+    { "id": "F1", "slug": "capa-base-qwerty-es", "title": "Base layer typing (QWERTY, host in ES layout)", "tickets": [], "doc": "docs/features/capa-base-qwerty-es.md", "spec": "openspec/specs/capa-base-qwerty-es/spec.md", "entry_points": ["config/dactyl.keymap:41"], "commit": "a7ec066" },
+    { "id": "F2", "slug": "cambio-de-capas", "title": "Momentary layer switching (SYM, NAV, NUM)", "tickets": [], "doc": "docs/features/cambio-de-capas.md", "spec": "openspec/specs/cambio-de-capas/spec.md", "entry_points": ["config/dactyl.keymap:44", "config/dactyl.keymap:48", "config/dactyl.keymap:50"], "commit": "a7ec066" },
+    { "id": "F3", "slug": "capa-numeros", "title": "NUM layer", "tickets": [], "doc": "docs/features/capa-numeros.md", "spec": "openspec/specs/capa-numeros/spec.md", "entry_points": ["config/dactyl.keymap:54"], "commit": "a7ec066" },
+    { "id": "F4", "slug": "capa-navegacion-multimedia", "title": "NAV layer (F-keys, arrows, media, Bluetooth keys)", "tickets": [], "doc": "docs/features/capa-navegacion-multimedia.md", "spec": "openspec/specs/capa-navegacion-multimedia/spec.md", "entry_points": ["config/dactyl.keymap:64"], "commit": "a7ec066" },
+    { "id": "F5", "slug": "capa-simbolos", "title": "SYM layer (symbols via Shift/AltGr on ES layout)", "tickets": [], "doc": "docs/features/capa-simbolos.md", "spec": "openspec/specs/capa-simbolos/spec.md", "entry_points": ["config/dactyl.keymap:77"], "commit": "a7ec066" },
+    { "id": "F6", "slug": "macros-teclas-muertas", "title": "Dead-key literal macros (grave and caret)", "tickets": [], "doc": "docs/features/macros-teclas-muertas.md", "spec": "openspec/specs/macros-teclas-muertas/spec.md", "entry_points": ["config/dactyl.keymap:25", "config/dactyl.keymap:31"], "commit": "a7ec066" },
+    { "id": "F7", "slug": "gestion-perfiles-bluetooth", "title": "Bluetooth profile selection and clearing", "tickets": [], "doc": "docs/features/gestion-perfiles-bluetooth.md", "spec": "openspec/specs/gestion-perfiles-bluetooth/spec.md", "entry_points": ["config/dactyl.keymap:71"], "commit": "a7ec066" },
+    { "id": "F8", "slug": "matriz-teclado-split", "title": "Key matrix scan and split matrix transform", "tickets": [], "doc": "docs/features/matriz-teclado-split.md", "spec": "openspec/specs/matriz-teclado-split/spec.md", "entry_points": ["config/boards/shields/dactyl/dactyl.dtsi:9", "config/boards/shields/dactyl/dactyl.dtsi:32", "config/boards/shields/dactyl/dactyl_left.overlay:3", "config/boards/shields/dactyl/dactyl_right.overlay:3"], "commit": "a7ec066" },
+    { "id": "F9", "slug": "roles-split-ble", "title": "Split roles and shield definition", "tickets": [], "doc": "docs/features/roles-split-ble.md", "spec": "openspec/specs/roles-split-ble/spec.md", "entry_points": ["config/boards/shields/dactyl/Kconfig.defconfig:1", "config/boards/shields/dactyl/Kconfig.shield:1", "config/boards/shields/dactyl/dactyl.zmk.yml:1"], "commit": "a7ec066" },
+    { "id": "F10", "slug": "sueno-profundo", "title": "Deep sleep on idle with key wake-up", "tickets": [], "doc": "docs/features/sueno-profundo.md", "spec": "openspec/specs/sueno-profundo/spec.md", "entry_points": ["config/dactyl.conf:5", "config/dactyl.conf:6", "config/boards/shields/dactyl/dactyl.dtsi:12"], "commit": "a7ec066" },
+    { "id": "F11", "slug": "informe-bateria-ble", "title": "Battery level reporting for both halves over BLE", "tickets": [], "doc": "docs/features/informe-bateria-ble.md", "spec": "openspec/specs/informe-bateria-ble/spec.md", "entry_points": ["config/dactyl.conf:10", "config/dactyl.conf:11", "config/dactyl.conf:12", "config/dactyl.conf:15"], "commit": "a7ec066" },
+    { "id": "F12", "slug": "build-firmware-ci", "title": "Firmware build in GitHub Actions", "tickets": [], "doc": "docs/features/build-firmware-ci.md", "spec": "openspec/specs/build-firmware-ci/spec.md", "entry_points": [".github/workflows/build.yml:2", "build.yaml:1", "config/west.yml:1"], "commit": "a7ec066" },
+    { "id": "F13", "slug": "reset-ajustes-bonds", "title": "Settings reset firmware (wipe BLE bonds)", "tickets": [], "doc": "docs/features/reset-ajustes-bonds.md", "spec": "openspec/specs/reset-ajustes-bonds/spec.md", "entry_points": ["build.yaml:7"], "commit": "a7ec066" },
+    { "id": "F14", "slug": "flasheo-emparejado", "title": "Flashing and pairing workflow (documented only)", "tickets": [], "doc": "docs/features/flasheo-emparejado.md", "spec": "openspec/specs/flasheo-emparejado/spec.md", "entry_points": ["README.md:64"], "commit": "a7ec066" },
+    { "id": "F15", "slug": "generador-soporte-18650", "title": "Parametric 18650 holder generator", "tickets": [], "doc": "docs/features/generador-soporte-18650.md", "spec": "openspec/specs/generador-soporte-18650/spec.md", "entry_points": ["hardware/18650-holder/package.json:7"], "commit": "a7ec066" },
+    { "id": "F16", "slug": "generador-capuchon-pulsador", "title": "Parametric switch cap generator", "tickets": [], "doc": "docs/features/generador-capuchon-pulsador.md", "spec": "openspec/specs/generador-capuchon-pulsador/spec.md", "entry_points": ["hardware/switch-button/package.json:7"], "commit": "a7ec066" }
+  ]
+}
