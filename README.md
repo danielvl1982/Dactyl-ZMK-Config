@@ -35,6 +35,18 @@ Everything about the build lives in [`docs/`](docs/):
 | [docs/04-roadmap.md](docs/04-roadmap.md) | Next steps |
 | [docs/05-build-log.md](docs/05-build-log.md) | Development history, dated |
 
+Reference derived from the code (every claim cites `file:line`):
+
+| Document | Contents |
+| --- | --- |
+| [docs/arquitectura.md](docs/arquitectura.md) | Architecture: keymap, shield, split BLE, CI build, STL generators |
+| [docs/configuracion.md](docs/configuracion.md) | Every firmware key and generator parameter |
+| [docs/datos.md](docs/datos.md) | Persistent and generated state (BLE bonds, STL files) |
+| [docs/operaciones.md](docs/operaciones.md) | Build, flash, reset, pairing and known risks |
+| [docs/features/README.md](docs/features/README.md) | The 16 features (layers, Bluetooth, sleep, CI, generators) with entry and exit matrices |
+| [docs/preguntas-abiertas.md](docs/preguntas-abiertas.md) | Open questions and inconsistencies |
+| [openspec/specs/](openspec/specs/) | One baseline spec per feature (current behavior) |
+
 ## Repository layout
 
 ```
