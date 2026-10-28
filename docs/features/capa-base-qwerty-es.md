@@ -74,4 +74,4 @@ The base layer (layer 0) is what the keyboard sends when no momentary layer is h
 - No automated test pins the base layer; it is validated by flashing the CI artifacts (`build.yaml:1-8`).
 - `docs/03-keymap.md` says "15 letters per hand", but the right half has 12 letters (`Y U I O P H J K L Ñ N M`) (`docs/03-keymap.md:56`, `config/dactyl.keymap:44-48`). See fragment.
 - `docs/03-keymap.md` says "not yet flashed", so the behavior on hardware is unverified (`docs/03-keymap.md:3`).
-- Open questions: `docs/.work/questions/capa-base-qwerty-es.md`.
+- Open questions: `docs/preguntas-abiertas.md` items 12 and 43.

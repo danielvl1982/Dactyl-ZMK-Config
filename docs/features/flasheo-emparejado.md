@@ -14,8 +14,8 @@ Gets the firmware built by CI ([F12](build-firmware-ci.md)) onto each nice!nano 
 
 ## Inputs (payload/config)
 
-- `dactyl_left.uf2` — artifact of the CI matrix entry `shield: dactyl_left`, flashed on the left half (`build.yaml:1-2`, `docs/operaciones.md:42`).
-- `dactyl_right.uf2` — artifact for `shield: dactyl_right`, flashed on the right half (`build.yaml:3-4`).
+- `dactyl_left.uf2` — artifact of the CI matrix entry `shield: dactyl_left`, flashed on the left half (`build.yaml:3`, `docs/operaciones.md:42`).
+- `dactyl_right.uf2` — artifact for `shield: dactyl_right`, flashed on the right half (`build.yaml:5`).
 - `settings_reset.uf2` — artifact for `shield: settings_reset`, flashed on a half to wipe its bonds (`build.yaml:6-8`).
 - Artifact naming and download location are defined by the upstream ZMK workflow, not by this repo (`.github/workflows/build.yml:6`, `README.md:59-61`; `inferido del código`). See [F12](build-firmware-ci.md).
 - Hardware: two nice!nano boards and a USB cable (`docs/operaciones.md:12`).

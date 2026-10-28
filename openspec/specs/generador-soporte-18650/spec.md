@@ -8,7 +8,7 @@ Baseline spec (current behavior, derived from code on 2026-10-28). Node CLI scri
 
 ### Requirement: Entry point and configuration
 
-The system SHALL run the full pipeline on every execution of `node holder_18650_tight.mjs [output-dir]` or `npm run build`, as top-level code with no exported function (`hardware/18650-holder/holder_18650_tight.mjs:107-266`, `hardware/18650-holder/package.json:7-8`). All configuration MUST come from the object `P` edited in the source; there are no CLI flags or env vars and no value in `P` is validated (`hardware/18650-holder/holder_18650_tight.mjs:40-84`).
+The system SHALL run the full pipeline on every execution of `node holder_18650_tight.mjs [output-dir]` or `npm run build`, as top-level code with no exported function (`hardware/18650-holder/holder_18650_tight.mjs:107-266`, `hardware/18650-holder/package.json:8`). All configuration MUST come from the object `P` edited in the source; there are no CLI flags or env vars and no value in `P` is validated (`hardware/18650-holder/holder_18650_tight.mjs:40-84`).
 
 #### Scenario: Run with defaults
 - GIVEN no argument is passed

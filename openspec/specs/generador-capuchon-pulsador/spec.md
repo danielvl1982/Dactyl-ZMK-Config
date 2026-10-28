@@ -8,7 +8,7 @@ Baseline spec (current behavior, derived from code on 2026-10-28). A Node script
 
 ### Requirement: Entry point and output location
 
-The system SHALL run through `node switch_cap.mjs [output-dir]` or `npm run build` in `hardware/switch-button`, taking the optional first argument as the output directory resolved with `path.resolve` and defaulting to the script's own directory (`hardware/switch-button/switch_cap.mjs:182-184`, `hardware/switch-button/package.json:7-8`). It MUST NOT read any config file or environment variable.
+The system SHALL run through `node switch_cap.mjs [output-dir]` or `npm run build` in `hardware/switch-button`, taking the optional first argument as the output directory resolved with `path.resolve` and defaulting to the script's own directory (`hardware/switch-button/switch_cap.mjs:182-184`, `hardware/switch-button/package.json:8`). It MUST NOT read any config file or environment variable.
 
 #### Scenario: Default output directory
 - GIVEN dependencies are installed with `npm install`

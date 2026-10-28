@@ -102,12 +102,17 @@ The system SHALL bind unused NAV positions to `&trans` so they fall through to t
 
 ### Requirement: Letters shadowed on NAV
 
-The system SHALL shadow the letter keys (`Q W E R T`, `Y U I O`, `A S D F G`, `H J K L`, `Z X C V B`, `N M , . /`) with NAV bindings, so no letter can be typed while NAV is held (`config/dactyl.keymap:67-71`).
+The system SHALL shadow the letter keys (`Q W E R T`, `Y U I O`, `A S D F G`, `H J K L`, `Z X C V B`, `N M , . /`) with NAV bindings, so those letters cannot be typed while NAV is held (`config/dactyl.keymap:67-73`). The base-layer positions of `P`, `ñ` (`SEMI`) and the acute accent (`SQT`) are `&trans` on NAV, so they still fall through to the base layer and stay typeable (`config/dactyl.keymap:67`, `config/dactyl.keymap:69`; inferido del código, ZMK `&trans` behavior).
 
 #### Scenario: Letter key under NAV
 - GIVEN NAV is held
 - WHEN a base-layer letter position is pressed
 - THEN the system SHALL send the NAV binding at that position and MUST NOT send the letter
+
+#### Scenario: P, ñ and acute under NAV
+- GIVEN NAV is held
+- WHEN the base-layer `P`, `ñ` or acute-accent position is pressed
+- THEN the system SHALL find `&trans` there and send the base-layer key (`config/dactyl.keymap:67`, `config/dactyl.keymap:69`; inferido del código)
 
 ### Requirement: Combined NAV and SYM activation
 

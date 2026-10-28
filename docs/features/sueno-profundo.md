@@ -4,12 +4,12 @@ Ticket: sin ticket (no ticket ids in git log or docs)
 
 ## Purpose
 
-Both halves of the keyboard enter deep sleep after a period without key activity, to save battery on the 18650 cells, and wake when any key is pressed. The behavior is configured entirely through Kconfig and one devicetree property; the repository contains no sleep code. The current timeout is 5 minutes (`config/dactyl.conf:6`); that line is an uncommitted working-tree change, the committed file keeps the ZMK default of 15 minutes (`config/dactyl.conf:3`, `docs/04-roadmap.md:41`).
+Both halves of the keyboard enter deep sleep after a period without key activity, to save battery on the 18650 cells, and wake when any key is pressed. The behavior is configured entirely through Kconfig and one devicetree property; the repository contains no sleep code. The current timeout is 5 minutes (`config/dactyl.conf:6`); it is committed in `8ac7234` on main, replacing the ZMK default of 15 minutes (`config/dactyl.conf:3`, `docs/04-roadmap.md:41`).
 
 ## Trigger / Entry point
 
 - Config: `CONFIG_ZMK_SLEEP=y` enables the ZMK sleep feature (`config/dactyl.conf:5`).
-- Config: `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=300000` sets the inactivity time before sleeping (`config/dactyl.conf:6`). Uncommitted at the time of writing.
+- Config: `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=300000` sets the inactivity time before sleeping (`config/dactyl.conf:6`). Committed in `8ac7234`.
 - Config: `wakeup-source;` on the `kscan0` node lets key presses wake the MCU (`config/boards/shields/dactyl/dactyl.dtsi:12`).
 - Runtime trigger: the idle timer firing is implemented inside ZMK, not in this repo (`inferido del código`: inferred from the Kconfig name and the comment at `config/dactyl.conf:3`).
 
@@ -32,19 +32,19 @@ Both halves of the keyboard enter deep sleep after a period without key activity
 
 | Salida | Detalle |
 |---|---|
-| MCU power state | Active to deep sleep after the idle timeout (300000 ms in the working tree); deep sleep to active on any key press (`config/dactyl.conf:5-6`, `config/boards/shields/dactyl/dactyl.dtsi:12`). |
+| MCU power state | Active to deep sleep after the idle timeout (300000 ms, committed in `8ac7234`); deep sleep to active on any key press (`config/dactyl.conf:5-6`, `config/boards/shields/dactyl/dactyl.dtsi:12`). |
 
 ## Business rules
 
 - Deep sleep is enabled on both halves because the setting lives in the shared conf file (`config/dactyl.conf:1`, `config/dactyl.conf:5`).
-- Idle timeout is 5 minutes in the working tree (`config/dactyl.conf:6`); the committed value is the ZMK default of 15 minutes (`config/dactyl.conf:3`).
+- Idle timeout is 5 minutes, committed in `8ac7234` (`config/dactyl.conf:6`); the ZMK default it replaces is 15 minutes (`config/dactyl.conf:3`).
 - Any key of the matrix wakes the half, because the whole `kscan0` is a wakeup source and no per-key filter exists (`config/boards/shields/dactyl/dactyl.dtsi:12`).
 - What counts as "activity" that resets the timer is defined by ZMK, not by this repo (`inferido del código`).
 
 ## Errors and edge cases
 
 - Wake does not preserve volatile state such as the active momentary layer: RAM state is lost on sleep (`inferido del código`; `docs/datos.md:12`, `docs/datos.md:59`).
-- The 5 min value is only in the working tree; a build from the last commit still uses 15 min (`config/dactyl.conf:3`, `config/dactyl.conf:6`).
+- The 5 min value is committed in `8ac7234`, so a build from main uses it (`config/dactyl.conf:3`, `config/dactyl.conf:6`).
 - The sleep setting was built in CI at `2bdfcf7` but "not flashed yet" per the roadmap, so real on-device behavior is unverified (`docs/04-roadmap.md:41-42`).
 - Each half sleeps on its own idle timer; whether the peripheral half and the central stay in sync after wake is not defined in this repo (`inferido del código`). See [F9](roles-split-ble.md) for the split roles.
 
@@ -66,5 +66,5 @@ Both halves of the keyboard enter deep sleep after a period without key activity
 ## Coverage / Gaps
 
 - No automated or documented on-device test of sleep and wake (`docs/04-roadmap.md:41-42`).
-- Timeout change uncommitted and unflashed; catalog entry still says "not set in repo" (fragments in `docs/.work/questions/sueno-profundo.md`).
+- Timeout change is committed in `8ac7234` but not yet flashed (`docs/preguntas-abiertas.md`, "Resuelto durante la documentación" item 2; item 19 for the upstream default).
 - ZMK default of 15 min is stated only in a comment, not provable from this repo.

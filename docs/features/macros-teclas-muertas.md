@@ -70,4 +70,4 @@ On the Spanish (ES) host layout, `` ` `` and `^` are dead keys: pressing them al
 - `docs/03-keymap.md` says "No macros and no Unicode are needed" but two macros exist and it documents them further down (`docs/03-keymap.md:19-20`, `docs/03-keymap.md:216-217`, `config/dactyl.keymap:25-35`). See fragment.
 - `docs/03-keymap.md` lists the dead grave as `&kp LBKT` without noting that SYM uses `macro_grave` instead (`docs/03-keymap.md:36`, `config/dactyl.keymap:80`).
 - Macro timing is unconfigured (no `wait-ms`/`tap-ms`), so reliability on slow BLE hosts is unverified; the keymap is documented as not yet flashed (`config/dactyl.keymap:25-35`, `docs/03-keymap.md:3`).
-- Open questions: `docs/.work/questions/macros-teclas-muertas.md`.
+- Open questions: `docs/preguntas-abiertas.md` items 24, 50 and 51.

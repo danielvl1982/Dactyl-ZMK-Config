@@ -76,5 +76,5 @@ Ninguno conocido. The only check is the workflow run itself (`.github/workflows/
 ## Coverage / Gaps
 
 - No tests or validation beyond a successful compile in CI.
-- Unpinned `@main` and `revision: main`, the missing path filter, and unprovable artifact behavior are recorded in `docs/.work/questions/build-firmware-ci.md`.
+- Unpinned `@main` and `revision: main`, the missing path filter, and unprovable artifact behavior are recorded in `docs/preguntas-abiertas.md` items 10, 22 and 41.
 - Used by [F13](reset-ajustes-bonds.md) (settings reset target) and [F14](flasheo-emparejado.md) (flashing the artifacts).

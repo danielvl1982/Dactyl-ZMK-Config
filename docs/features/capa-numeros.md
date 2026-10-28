@@ -9,7 +9,7 @@ The NUM layer (layer 1) gives the keyboard the Spanish number row. It is active 
 ## Trigger / Entry point
 
 - Config: `num_layer` node of the `zmk,keymap`, 48 bindings in row-major order, 12 per row (`config/dactyl.keymap:54-62`).
-- The layer is activated by `&mo LAYER_NUM` on the right half, bottom row, second position (`FN`) (`config/dactyl.keymap:50`). `LAYER_NUM` is `1` (`config/dactyl.keymap:15`). The momentary-layer behavior is owned by [F2](cambio-de-capas.md).
+- The layer is activated by `&mo LAYER_NUM` on the right half, bottom row, third position (`FN`, position 44) (`config/dactyl.keymap:50`). `LAYER_NUM` is `1` (`config/dactyl.keymap:15`). The momentary-layer behavior is owned by [F2](cambio-de-capas.md).
 
 ## Inputs (payload/config)
 
@@ -74,4 +74,4 @@ The NUM layer (layer 1) gives the keyboard the Spanish number row. It is active 
 - `docs/03-keymap.md` says "not yet flashed", so the behavior on hardware is unverified (`docs/03-keymap.md:3`).
 - `docs/03-keymap.md` says blank cells are `&trans`, but the two outer-bottom cells are `&none` (`docs/03-keymap.md:121`, `config/dactyl.keymap:60`). See fragment.
 - Fall-through of `&trans` and the self-release of `FN` rely on ZMK semantics, not on repository code (inferido del código).
-- Open questions: `docs/.work/questions/capa-numeros.md`.
+- Open questions: `docs/preguntas-abiertas.md` items 16 and 47.

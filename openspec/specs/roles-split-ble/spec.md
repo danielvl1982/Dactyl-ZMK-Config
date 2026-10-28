@@ -64,7 +64,7 @@ The system SHALL build the right half as a peripheral that sends key events to t
 
 ### Requirement: Keymap runs on the central
 
-The system SHALL run the keymap and layer logic on the central, receiving right-half key positions offset by 6 columns (`config/boards/shields/dactyl/dactyl_right.overlay:28-31`). Column offset is set only on the right overlay (`config/boards/shields/dactyl/dactyl_left.overlay:3-13`).
+The system SHALL run the keymap and layer logic on the central, receiving right-half key positions offset by 6 columns (`config/boards/shields/dactyl/dactyl_right.overlay:15-18`). Column offset is set only on the right overlay (`config/boards/shields/dactyl/dactyl_left.overlay:3-13`).
 
 #### Scenario: Right-half key press
 - GIVEN the right half sends a key event

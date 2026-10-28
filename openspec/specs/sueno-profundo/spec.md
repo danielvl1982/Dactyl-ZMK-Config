@@ -15,19 +15,19 @@ The system SHALL enable the ZMK sleep feature with `CONFIG_ZMK_SLEEP=y` in the s
 - WHEN either half is built
 - THEN the system SHALL include `CONFIG_ZMK_SLEEP=y` in that build
 
-### Requirement: Idle sleep timeout of 5 minutes (uncommitted)
+### Requirement: Idle sleep timeout of 5 minutes
 
-The system SHALL set `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=300000` (5 min) in the working tree (`config/dactyl.conf:6`). This line is an uncommitted working-tree change; the committed file keeps the ZMK default of 15 min (`config/dactyl.conf:3`).
+The system SHALL set `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=300000` (5 min) (`config/dactyl.conf:6`). This line is committed on `main` (commit `8ac7234`); it replaces the ZMK default of 15 min mentioned in the file comment (`config/dactyl.conf:3`).
 
-#### Scenario: Working-tree build uses 5 minutes
-- GIVEN the uncommitted `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=300000` line is present
-- WHEN firmware is built from the working tree
+#### Scenario: Build uses 5 minutes
+- GIVEN the committed `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=300000` line is present
+- WHEN firmware is built from `main`
 - THEN the system SHALL use a 300000 ms idle timeout (unit ms is `inferido del código`, from the file comment "5 min")
 
-#### Scenario: Build from last commit uses the default
-- GIVEN the timeout line is not committed
-- WHEN firmware is built from the last commit
-- THEN the system SHALL use the ZMK default of 15 min (stated only in a comment, `config/dactyl.conf:3`)
+#### Scenario: Timeout line removed
+- GIVEN the timeout line is absent from `config/dactyl.conf`
+- WHEN firmware is built
+- THEN the system SHALL fall back to the ZMK default of 15 min (stated only in a comment, `config/dactyl.conf:3`; inferido del código)
 
 ### Requirement: Any key wakes the half
 

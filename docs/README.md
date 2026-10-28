@@ -2,9 +2,9 @@
 
 This folder records the development of the Dactyl 4x6 keyboard (ZMK firmware plus printable hardware parts): the hardware, the current state, the agreed keymap, the plan, the history of every decision, and a code-derived reference.
 
-The code-derived documents (architecture, data, configuration, operations, features) describe the real code at commit `a7ec066`. Every relevant claim cites `file:line`. What cannot be confirmed by reading the code is marked **inferido del código** and collected in [preguntas-abiertas.md](preguntas-abiertas.md). Machine state: [.manifest.json](.manifest.json).
+The code-derived documents (architecture, data, configuration, operations, features) describe the real code at commit `8ac7234`. Every relevant claim cites `file:line`. What cannot be confirmed by reading the code is marked **inferido del código** and collected in [preguntas-abiertas.md](preguntas-abiertas.md). Machine state: [.manifest.json](.manifest.json).
 
-Conventions: code paths are relative to the repository root and line numbers match the commit above, except `config/dactyl.conf`, which has an uncommitted change (the 5 minute sleep timeout, open question 2), so its line numbers may shift once it is committed. No secrets are documented.
+Conventions: code paths are relative to the repository root and line numbers match the commit above. No secrets are documented.
 
 ## How to use this documentation to implement
 

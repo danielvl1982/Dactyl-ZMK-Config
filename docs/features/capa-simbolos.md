@@ -79,4 +79,4 @@ The SYM layer (layer 3) gives the typist the punctuation and programming symbols
 - No automated test pins the SYM layer; it is validated by flashing the CI artifacts (`build.yaml:1-8`).
 - `docs/03-keymap.md` says "not yet flashed", so the ES combinations are unverified on hardware (`docs/03-keymap.md:3`).
 - `docs/03-keymap.md` says the right pinky and outer columns are unavailable under SYM, but the keymap uses `&trans` there. See fragment.
-- Open questions: `docs/.work/questions/capa-simbolos.md`; `€` and AltGr as a physical key are in `docs/03-keymap.md:221-222`.
+- Open questions: `docs/preguntas-abiertas.md` items 3, 4, 17 and 48; `€` and AltGr as a physical key are in `docs/03-keymap.md:221-222`.

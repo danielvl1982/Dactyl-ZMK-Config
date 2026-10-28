@@ -8,7 +8,7 @@ Baseline spec (current behavior, derived from code on 2026-10-28). The NUM layer
 
 ### Requirement: Layer activation
 
-The system SHALL activate the NUM layer (`LAYER_NUM`, index 1) only while the `FN` key is held, through `&mo LAYER_NUM` on the right half, bottom row, second position (`config/dactyl.keymap:50`, `config/dactyl.keymap:15`). The `num_layer` node MUST be the second entry under `keymap` so that it matches `LAYER_NUM` (`config/dactyl.keymap:12`, `config/dactyl.keymap:54`). The momentary-layer behavior itself is owned by F2 (`cambio-de-capas`).
+The system SHALL activate the NUM layer (`LAYER_NUM`, index 1) only while the `FN` key is held, through `&mo LAYER_NUM` on the right half, bottom row, third position (`config/dactyl.keymap:50`, `config/dactyl.keymap:15`). The `num_layer` node MUST be the second entry under `keymap` so that it matches `LAYER_NUM` (`config/dactyl.keymap:12`, `config/dactyl.keymap:54`). The momentary-layer behavior itself is owned by F2 (`cambio-de-capas`).
 
 #### Scenario: Holding FN
 - GIVEN the base layer is active

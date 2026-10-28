@@ -58,7 +58,7 @@ Each half measures its own battery and the left half (BLE central) shows both le
 - Fetching and proxy keys are set on the right half too, where they have no role; whether they are ignored or cause an error is not provable here (`config/dactyl.conf:1`, `config/dactyl.conf:11-12`; `inferido del código`).
 - No cut-off: the nice!nano charges the cell but does not cut off at low voltage, so a reported level is informational and does not protect the cell (`docs/04-roadmap.md:36-38`, `docs/operaciones.md:88`).
 - Not tested on hardware: the keys compile in CI but have not been flashed (`docs/04-roadmap.md:43-44`, `docs/04-roadmap.md:49-50`).
-- Both halves share one conf file with an uncommitted change at the time of writing (git status), so line numbers may shift (`config/dactyl.conf:1-15`).
+- Both halves share one conf file whose 5 min sleep timeout is committed in `8ac7234` (`config/dactyl.conf:1-15`).
 
 ## Where to act
 
@@ -84,5 +84,5 @@ Each half measures its own battery and the left half (BLE central) shows both le
 - The battery-life measurement over a week is pending (`docs/04-roadmap.md:50`).
 - Defaults of the four keys are not provable from this repo (`docs/configuracion.md:151`; fragment).
 - Behavior when one half is absent is undefined here (fragment).
-- Security trade-off of the GATT key is already open in `docs/.work/questions/arquitectura.md:17-21`; it is recorded here only for its battery side (fragment).
-- `docs/operaciones.md:67` cites `config/dactyl.conf:9` for `CONFIG_ZMK_BATTERY_REPORTING`, but it is on line 10 (fragment).
+- Security trade-off of the GATT key is already open in `docs/preguntas-abiertas.md` item 35; it is recorded here only for its battery side (fragment).
+- The `docs/operaciones.md:67` citation of `CONFIG_ZMK_BATTERY_REPORTING` was corrected to `config/dactyl.conf:10` (`docs/preguntas-abiertas.md` item 49); no open problem remains.

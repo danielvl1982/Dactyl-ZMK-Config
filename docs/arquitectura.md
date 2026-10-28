@@ -1,6 +1,6 @@
 # Arquitectura
 
-Architecture of the Dactyl 4x6 repository: a ZMK user-config for a split wireless keyboard plus two small Node generators for printed parts. There are no services, databases or DI container; checklist items that need them are marked `No aplica`. Feature ids (F1-F16) come from `docs/.work/catalog.json`; the per-process behavior lives in `docs/features/`.
+Architecture of the Dactyl 4x6 repository: a ZMK user-config for a split wireless keyboard plus two small Node generators for printed parts. There are no services, databases or DI container; checklist items that need them are marked `No aplica`. Feature ids (F1-F16) are those used in `docs/features/`; the per-process behavior lives in `docs/features/`.
 
 Prior hand-written docs ([01-hardware.md](01-hardware.md) to [05-build-log.md](05-build-log.md)) are cited as context; where they contradict code, code wins and the difference is listed in `docs/preguntas-abiertas.md`.
 
@@ -129,11 +129,11 @@ sequenceDiagram
 
 ### 5.2 Bluetooth profile and battery (F7, F11)
 
-Profile keys live on the NAV layer bottom row: `&bt BT_SEL 0/1/2` and `&bt BT_CLR` (`config/dactyl.keymap:71`). Battery: each half reports its level, the central fetches the peripheral's and proxies both (`config/dactyl.conf:8-12`); `BT_GATT_ENFORCE_SUBSCRIPTION=n` is a Windows workaround (`config/dactyl.conf:14-15`).
+Profile keys live on the NAV layer row 3: `&bt BT_SEL 0/1/2` and `&bt BT_CLR` (`config/dactyl.keymap:71`). Battery: each half reports its level, the central fetches the peripheral's and proxies both (`config/dactyl.conf:8-12`); `BT_GATT_ENFORCE_SUBSCRIPTION=n` is a Windows workaround (`config/dactyl.conf:14-15`).
 
 ### 5.3 Idle sleep (F10)
 
-`CONFIG_ZMK_SLEEP=y` with a 300000 ms timeout (`config/dactyl.conf:5-6`); any key wakes a half because `kscan0` declares `wakeup-source` (`dactyl.dtsi:12`). In the working tree the timeout line is uncommitted (git shows it as modified); the committed file keeps the 15 min default. Catalog entry F10 states the timeout is not set in the repo; that is out of date for the working tree.
+`CONFIG_ZMK_SLEEP=y` with a 300000 ms timeout (`config/dactyl.conf:5-6`); any key wakes a half because `kscan0` declares `wakeup-source` (`dactyl.dtsi:12`). The 5 min timeout is committed in `8ac7234` (on `main`); the ZMK default it replaces is 15 min.
 
 ### 5.4 Firmware build in CI (F12, F13)
 
@@ -195,11 +195,11 @@ sequenceDiagram
 
 ## 8. Logging / observabilidad
 
-`No aplica (no logging framework, sinks or metrics)`. The only output is two `console.log` lines in the holder (`holder_18650_tight.mjs:264-266`) and the equivalent in the cap script (`switch_cap.mjs:187`). In firmware, the only observable runtime signal is the BLE battery service (`config/dactyl.conf:8-12`, F11). ZMK logging (`CONFIG_ZMK_USB_LOGGING` and similar) is not enabled in `config/dactyl.conf`.
+`No aplica (no logging framework, sinks or metrics)`. The only output of the generators is a report on stdout: the holder prints a status, volume, size and geometry summary (`holder_18650_tight.mjs:215-225`) and the cap script prints a similar summary followed by `FIT PROBLEMS` with one line per failed check, or `fit           : ok` (`switch_cap.mjs:124-150`). In firmware, the only observable runtime signal is the BLE battery service (`config/dactyl.conf:8-12`, F11). ZMK logging (`CONFIG_ZMK_USB_LOGGING` and similar) is not enabled in `config/dactyl.conf`.
 
 ## 9. Seguridad
 
 - **Authentication / authorization:** `No aplica (no users, services or APIs)`. The keyboard pairs over standard BLE bonding managed by ZMK; the repo changes no pairing or security Kconfig options (`config/dactyl.conf:1-15`).
 - **Weakening setting:** `CONFIG_BT_GATT_ENFORCE_SUBSCRIPTION=n` disables a GATT subscription check, kept to make the battery level appear on Windows (`config/dactyl.conf:14-15`).
 - **Secrets:** none in the repository; no secret keys are referenced by the workflow (`.github/workflows/build.yml:1-6`).
-- **Supply chain:** ZMK `main` and the reusable workflow `@main` are unpinned (`config/west.yml:7`, `.github/workflows/build.yml:6`), so upstream changes enter the firmware without review. npm dependencies are locked by `package-lock.json`.
+- **Supply chain:** ZMK `main` and the reusable workflow `@main` are unpinned (`config/west.yml:8`, `.github/workflows/build.yml:6`), so upstream changes enter the firmware without review. npm dependencies are locked by `package-lock.json`.

@@ -78,4 +78,4 @@ Lets the user keep up to three Bluetooth host pairings on the keyboard (for exam
 - Pairing, profile switching and `BT_CLR` have not been verified on hardware (`docs/04-roadmap.md:45-49`, `docs/03-keymap.md:3`).
 - Which half executes `&bt` when pressed on the right half is not provable from this repo (`docs/03-keymap.md:141-142`).
 - Catalog exit lists only the profile/bond writes; the advertising side effect is added here.
-- Open questions: `docs/.work/questions/gestion-perfiles-bluetooth.md`.
+- Open questions: `docs/preguntas-abiertas.md` items 5, 6, 7 and 28.

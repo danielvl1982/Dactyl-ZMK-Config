@@ -10,7 +10,7 @@ Three keys on the base layer hold a temporary layer while pressed: SYM, NAV and 
 
 - Config: `&mo LAYER_SYM` at the outer-right key of row 1, position 11 (`config/dactyl.keymap:44`).
 - Config: `&mo LAYER_NAV` at the outer-right key of row 3, position 35 (`config/dactyl.keymap:48`).
-- Config: `&mo LAYER_NUM` on the `FN` key, right thumb cluster, position 44 (`config/dactyl.keymap:50`).
+- Config: `&mo LAYER_NUM` on the `FN` key, third key of the right half bottom row (the board has no thumb cluster), position 44 (`config/dactyl.keymap:50`).
 - Positions are counted row-major, 12 per row, left half first (see [F1](capa-base-qwerty-es.md)); the numbers are `inferido del código` from that order (`config/dactyl.keymap:44-50`).
 - All three keys are on the right half, so the press travels from the peripheral to the central over BLE (see [F8](matriz-teclado-split.md) and [F7](gestion-perfiles-bluetooth.md)).
 
@@ -43,7 +43,7 @@ Three keys on the base layer hold a temporary layer while pressed: SYM, NAV and 
 ## Business rules
 
 - Layers are momentary only: there is no `&tog`, `&to` or `&sl` binding in the keymap, so no layer stays on after release (`config/dactyl.keymap:41-90`).
-- SYM is held with the right pinky at the outer column of row 1, NAV with the right pinky at the outer column of row 3, NUM with the right thumb on `FN` (`docs/03-keymap.md:78-80`, `docs/03-keymap.md:97-103`).
+- SYM is held with the right pinky at the outer column of row 1, NAV with the right pinky at the outer column of row 3, NUM with the third key of the right half bottom row (`FN`) (`docs/03-keymap.md:78-80`, `docs/03-keymap.md:97-103`).
 - Layer indexes are SYM 3, NAV 2, NUM 1, base 0 (`config/dactyl.keymap:12`, `config/dactyl.keymap:15-17`). When several layers are held, the highest index is consulted first, `inferido del código` from ZMK layer resolution.
 - Every layer has 48 bindings, with `&trans` wherever the base layer must stay reachable, including the layer keys themselves (`config/dactyl.keymap:54-88`).
 

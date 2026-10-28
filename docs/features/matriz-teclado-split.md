@@ -89,5 +89,5 @@ Ninguno conocido. The repo has no automated tests; the matrix was verified by ha
 ## Coverage / Gaps
 
 - No test or build check pins the position map or the 48-binding size; correctness depends on the manual hardware test of the old 24-position keymap (`docs/02-current-state.md:21-34`).
-- The 23-vs-24 key mismatch is an open `inconsistencia` fragment (`docs/.work/questions/matriz-teclado-split.md`).
+- The 23-vs-24 key mismatch is resolved: 23 physical keys per half is correct and the 24th transform position is kept on purpose, bound to `&none` (`docs/preguntas-abiertas.md`, "Resuelto durante la documentación" item 1; `config/boards/shields/dactyl/dactyl.dtsi:29-31`, `config/boards/shields/dactyl/dactyl.dtsi:37-40`).
 - Related docs: `docs/01-hardware.md:15-19`, `docs/01-hardware.md:57-65`.

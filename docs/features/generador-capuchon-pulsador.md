@@ -8,7 +8,7 @@ A Node script that generates the 3D-printable STL of a cap ("capuchon") for the 
 
 ## Trigger / Entry point
 
-- CLI: `npm run build` in `hardware/switch-button` runs `node switch_cap.mjs` (`hardware/switch-button/package.json:7-8`).
+- CLI: `npm run build` in `hardware/switch-button` runs `node switch_cap.mjs` (`hardware/switch-button/package.json:8`).
 - CLI: `node switch_cap.mjs [output-dir]`; the optional first argument is the output directory (`hardware/switch-button/switch_cap.mjs:182-184`). Note that `npm run build` cannot pass the argument without `npm run build -- <dir>` (`inferido del código`: standard npm behavior).
 - Prerequisite: `npm install` for `manifold-3d` (`hardware/switch-button/package.json:10-12`, `hardware/switch-button/switch_cap.mjs:6`, `hardware/switch-button/switch_cap.mjs:32`).
 
@@ -81,7 +81,7 @@ The process exit code is not set by the script, so it is 0 on a normal finish ev
 | Fit validation rules or making them block the export | `problems` checks (`hardware/switch-button/switch_cap.mjs:135-150`) |
 | Report content or PLA density | report block (`hardware/switch-button/switch_cap.mjs:124-133`) |
 | STL format or header | `writeBinarySTL` (`hardware/switch-button/switch_cap.mjs:155-180`); a copy lives in `hardware/18650-holder/holder_18650_tight.mjs:230` (see [F15](generador-soporte-18650.md)) |
-| Output path, file name, CLI arguments | `outDir`, `out`, `P.outBase` (`hardware/switch-button/switch_cap.mjs:182-187`, `hardware/switch-button/switch_cap.mjs:60`); npm script (`hardware/switch-button/package.json:7-8`) |
+| Output path, file name, CLI arguments | `outDir`, `out`, `P.outBase` (`hardware/switch-button/switch_cap.mjs:182-187`, `hardware/switch-button/switch_cap.mjs:60`); npm script (`hardware/switch-button/package.json:8`) |
 | Dependency version | `hardware/switch-button/package.json:10-12` |
 
 ## Existing tests

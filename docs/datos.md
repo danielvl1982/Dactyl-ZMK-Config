@@ -1,6 +1,6 @@
 # Data and persistent state
 
-This repository has no database, no SQL and no ORM. "Data" here means persistent or generated state: ZMK settings flash (BLE bonds and profiles), volatile runtime state (layer, battery level), and the STL files produced by the hardware generators. Feature ids come from `docs/.work/catalog.json`. Narrative context lives in `docs/01-hardware.md` to `docs/05-build-log.md`; where they disagree with code, code wins.
+This repository has no database, no SQL and no ORM. "Data" here means persistent or generated state: ZMK settings flash (BLE bonds and profiles), volatile runtime state (layer, battery level), and the STL files produced by the hardware generators. Feature ids (F1-F16) are those used in `docs/features/`. Narrative context lives in `docs/01-hardware.md` to `docs/05-build-log.md`; where they disagree with code, code wins.
 
 Evidence notes: CodeGraph indexes only `hardware/*.mjs`. Keymap, conf, devicetree, Kconfig and workflow files were read directly (line numbers from the file read). The ZMK upstream behavior (what lands in flash) is not in this repo, so those claims are marked `inferred from code`.
 
@@ -15,7 +15,7 @@ Evidence notes: CodeGraph indexes only `hardware/*.mjs`. Keymap, conf, devicetre
 | Generated STL files | Files in git | This repo (generators in `hardware/`) | Output dir argument or script directory | `hardware/18650-holder/holder_18650_tight.mjs:257-259`, `hardware/switch-button/switch_cap.mjs:182-184` (F15, F16) |
 | Third-party STLs | Files in git | Third party, read-only | n/a | `hardware/third-party/README.md` (not a catalogued process) |
 
-Settings flash is not written by any file in this repo directly. That the bond and profile state persists across power cycles is `inferred from code` (the keymap invokes `&bt` behaviors; persistence is ZMK default behavior, with no `CONFIG_SETTINGS` override in `config/dactyl.conf:1-15`). See fragment `negocio-datos` in `docs/.work/questions/datos.md`.
+Settings flash is not written by any file in this repo directly. That the bond and profile state persists across power cycles is `inferred from code` (the keymap invokes `&bt` behaviors; persistence is ZMK default behavior, with no `CONFIG_SETTINGS` override in `config/dactyl.conf:1-15`). See item 5 in `docs/preguntas-abiertas.md`.
 
 ## 2. Tables / collections
 
@@ -56,7 +56,7 @@ Columns are the stores of section 1. `R` read, `W` write, `D` delete, `-` none.
 | F7 BT profiles | W (select), D (clear bond) | - | - | - | - | `config/dactyl.keymap:71` |
 | F8 matrix scan | - | - | - | - | - | `config/boards/shields/dactyl/dactyl.dtsi:9` |
 | F9 split roles | - | - | - | - | - | `config/boards/shields/dactyl/Kconfig.defconfig:1` |
-| F10 deep sleep | - | lost on sleep (inferred) | - | - | - | `config/dactyl.conf:5-6`, `config/boards/shields/dactyl/dactyl.dtsi:11` |
+| F10 deep sleep | - | lost on sleep (inferred) | - | - | - | `config/dactyl.conf:5-6`, `config/boards/shields/dactyl/dactyl.dtsi:12` |
 | F11 battery report | - | - | R (both halves), W to GATT | - | - | `config/dactyl.conf:10-12` |
 | F12 CI build | - | - | - | W artifacts (`.uf2`) | - | `build.yaml:1-8`, `.github/workflows/build.yml:6` |
 | F13 settings reset | D (whole partition) | - | - | W (flashes reset image) | - | `build.yaml:6-8` |
@@ -70,10 +70,10 @@ F1 to F6 only read `.keymap` data compiled into firmware (static, read-only at r
 
 | State | Values | Who sets it | Transitions | Evidence |
 |---|---|---|---|---|
-| Active layer | `0` base, `LAYER_NUM`=1, `LAYER_NAV`=2, `LAYER_SYM`=3 | `&mo LAYER_SYM` (right top corner), `&mo LAYER_NAV` (right bottom corner), `&mo LAYER_NUM` (right thumb) | Layer is active only while the key is held; release returns to the layer below. No toggle or sticky layer exists | `config/dactyl.keymap:15-17,44,48,50` |
+| Active layer | `0` base, `LAYER_NUM`=1, `LAYER_NAV`=2, `LAYER_SYM`=3 | `&mo LAYER_SYM` (last key of row 1, `config/dactyl.keymap:44`), `&mo LAYER_NAV` (last key of row 3, `config/dactyl.keymap:48`), `&mo LAYER_NUM` (FN, third key of the right half in the bottom row, `config/dactyl.keymap:50`); the board has no thumb cluster | Layer is active only while the key is held; release returns to the layer below. No toggle or sticky layer exists | `config/dactyl.keymap:15-17,44,48,50` |
 | Active BLE profile | 0, 1, 2 | `&bt BT_SEL n` (NAV layer) | Any to any on key press; `BT_CLR` deletes the bond of the current profile, profile stays selected (inferred) | `config/dactyl.keymap:71` |
 | Split role | central (left), peripheral (right) | Kconfig defaults | Fixed at build time | `config/boards/shields/dactyl/Kconfig.defconfig:1-7` |
-| Power | active, deep sleep | idle timer; key press wakes (`wakeup-source` on kscan0) | Active to sleep after `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT` = 300000 ms (5 min); sleep to active on any key | `config/dactyl.conf:5-6`, `config/boards/shields/dactyl/dactyl.dtsi:11` |
+| Power | active, deep sleep | idle timer; key press wakes (`wakeup-source` on kscan0) | Active to sleep after `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT` = 300000 ms (5 min); sleep to active on any key | `config/dactyl.conf:5-6`, `config/boards/shields/dactyl/dactyl.dtsi:12` |
 | Battery reporting | enabled / disabled flags | Kconfig | Build time | `config/dactyl.conf:10-12,15` |
 
 Windows workaround flag: `CONFIG_BT_GATT_ENFORCE_SUBSCRIPTION=n` disables subscription enforcement so the battery level can appear in Windows Settings (`config/dactyl.conf:14-15`).
@@ -84,7 +84,7 @@ Windows workaround flag: `CONFIG_BT_GATT_ENFORCE_SUBSCRIPTION=n` disables subscr
 
 Keymap position 0..47 is reading order over 4 rows by 12 columns; the left half owns columns 0-5 and the right half 6-11 through `col-offset = <6>` (`config/boards/shields/dactyl/dactyl_right.overlay:16-18`). The right half is listed in reverse (`RC(r,11)` first) because both PCBs count columns outside to center (`config/boards/shields/dactyl/dactyl.dtsi:27-28,37-40`).
 
-Worked example: first key of the right half on row 0 is keymap position 6, mapped to `RC(0,11)`; the right overlay offsets local column 5 by 6 to reach column 11 (`dactyl.dtsi:37`, `dactyl_right.overlay:17`). The transform maps 48 positions (4 x 12), see fragment on key count.
+Worked example: first key of the right half on row 0 is keymap position 6, mapped to `RC(0,11)`; the right overlay offsets local column 5 by 6 to reach column 11 (`dactyl.dtsi:37`, `dactyl_right.overlay:17`). The transform maps 48 positions (4 x 12), see item 1 of the resolved list in `docs/preguntas-abiertas.md`.
 
 ### 5.2 18650 holder geometry (F15)
 
@@ -99,7 +99,7 @@ Worked example with the committed parameters (`holder_18650_tight.mjs:40-84`):
 - `boreR = (18.5 + 0.4) / 2 = 9.45`, `outerR = 9.45 + 2.0 = 11.45`, `baseZ = -(9.45 + 1.3) = -10.75`
 - `plateBack = 1.0 - 0.4 = 0.6`, `negGap = 3.5 - 0.6 = 2.9`, `posGap = 1.5 - 0.6 = 0.9`
 - `innerSpan = 65.8 + 2.9 + 0.9 = 69.6`, `L = 2.0 + 69.6 + 2.0 = 73.6`
-- Height: the cradle rim is at the axis, so `0 - baseZ` = 10.75 mm (`holder_18650_tight.mjs:8,171`). With `roundEnds: true` the end discs are kept to `topZ = outerR` (`holder_18650_tight.mjs:92`), so the end discs reach `outerR - baseZ` = 11.45 + 10.75 = 22.2 mm. The header still states "overall 73.6 x 22.9 x 10.75" (`holder_18650_tight.mjs:8`). See fragment `inconsistencia` on the header.
+- Height: the cradle rim is at the axis, so `0 - baseZ` = 10.75 mm (`holder_18650_tight.mjs:8,171`). With `roundEnds: true` the end discs are kept to `topZ = outerR` (`holder_18650_tight.mjs:92`), so the end discs reach `outerR - baseZ` = 11.45 + 10.75 = 22.2 mm. The header still states "overall 73.6 x 22.9 x 10.75" (`holder_18650_tight.mjs:8`). See item 36 in `docs/preguntas-abiertas.md`.
 
 The mirrored STL is `part.mirror([1,0,0]).translate([L,0,0])`, so both files share the same bounding box in X (`holder_18650_tight.mjs:265`).
 
@@ -130,7 +130,7 @@ Both generators use an identical `writeBinarySTL` (`holder_18650_tight.mjs:230-2
 | Triangle count | 4 (uint32 LE) | `triVerts.length / 3` of the manifold mesh |
 | Per triangle | 50 | normal (3 float32), 3 vertices (9 float32), attribute (uint16 = 0) |
 
-File size = `84 + triangles * 50`. The normal is recomputed from the vertices, not copied from the mesh (`holder_18650_tight.mjs:245-249`). The function is duplicated in both scripts (see fragment `tecnica`).
+File size = `84 + triangles * 50`. The normal is recomputed from the vertices, not copied from the mesh (`holder_18650_tight.mjs:245-249`). The function is duplicated in both scripts (see item 30 in `docs/preguntas-abiertas.md`).
 
 Output path: `[output-dir]/<outBase>.stl`; the output directory is `process.argv[2]` when given, otherwise the script directory (`holder_18650_tight.mjs:257-262`, `switch_cap.mjs:182-186`). `outBase` is `holder_18650_tight` or `switch_cap`. The generators overwrite existing files without warning.
 
@@ -150,10 +150,10 @@ The central proxies its own and the peripheral's level to the host (`config/dact
 
 ## 7. Schema differences
 
-`No aplica (there is no production DDL, no test schema and no database)`. The equivalent comparison is between generated artifacts and the documented parameters, recorded as fragments:
+`No aplica (there is no production DDL, no test schema and no database)`. The equivalent comparison is between generated artifacts and the documented parameters, recorded as items in `docs/preguntas-abiertas.md`:
 
 - The committed STLs cannot be proven to match the committed `.mjs` parameters without regenerating them; the holder header comment (`holder_18650_tight.mjs:8-12`) describes flush end walls while `roundEnds: true` (`holder_18650_tight.mjs:61`) keeps full discs.
-- `docs/.work/questions/catalog.md` says the 15 min sleep default is not overridden; `config/dactyl.conf:3-6` sets 300000 ms. The working-tree `config/dactyl.conf` has uncommitted modifications (git status at start).
+- The 5 min idle timeout (`CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=300000`, `config/dactyl.conf:6`) is committed in `8ac7234`; the ZMK default it replaces is 15 min (see item 2 of the resolved list in `docs/preguntas-abiertas.md`).
 - `docs/01-hardware.md:7` and `docs/04-roadmap.md:63,81` mention a trackball; no persistent or generated data exists for it.
 
 Cross-links: `docs/01-hardware.md` (holder), `docs/03-keymap.md` (layers, BT keys), `docs/04-roadmap.md` (settings reset, battery).

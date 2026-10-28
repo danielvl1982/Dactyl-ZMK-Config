@@ -13,7 +13,7 @@ One shared file applied to both halves (`config/dactyl.conf:1`). Values are Kcon
 | Key | Type | Value in repo | Default if unset | Where set | Effect |
 |---|---|---|---|---|---|
 | `CONFIG_ZMK_SLEEP` | bool | `y` | `n` (inferred from code) | `config/dactyl.conf:5` | Enables deep sleep after idle. Any key press wakes the half because `kscan0` is a `wakeup-source` (`config/dactyl.conf:4`, `config/boards/shields/dactyl/dactyl.dtsi:12`). F10. |
-| `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT` | int, ms | `300000` (5 min) | `900000` (15 min) (inferred from code; the comment in the file states the default is 15) | `config/dactyl.conf:6` | Inactivity time before deep sleep. Changed from the 15 min default to 5 min; the change is in the working tree and not committed yet. F10. |
+| `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT` | int, ms | `300000` (5 min) | `900000` (15 min) (inferred from code; the comment in the file states the default is 15) | `config/dactyl.conf:6` | Inactivity time before deep sleep. Changed from the 15 min default to 5 min; the change is committed in `8ac7234` (on `main`). F10. |
 | `CONFIG_ZMK_BATTERY_REPORTING` | bool | `y` | inferred from code: depends on the board | `config/dactyl.conf:10` | Each half reports its own battery level. F11. |
 | `CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING` | bool | `y` | `n` (inferred from code) | `config/dactyl.conf:11` | The central (left) fetches the peripheral's level over the split BLE link. F11. |
 | `CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_PROXY` | bool | `y` | `n` (inferred from code) | `config/dactyl.conf:12` | The central proxies both levels to the host. F11. |
@@ -37,10 +37,10 @@ One shared file applied to both halves (`config/dactyl.conf:1`). Values are Kcon
 | `diode-direction` | `col2row` | `config/boards/shields/dactyl/dactyl.dtsi:11` | Diode orientation of the PCB. |
 | `wakeup-source` | present | `config/boards/shields/dactyl/dactyl.dtsi:12` | Lets key presses wake the MCU from deep sleep. F10. |
 | `row-gpios` | `pro_micro` pins 21, 20, 19, 18, active high, pull-down | `config/boards/shields/dactyl/dactyl.dtsi:15-20` | Row pins, identical on both halves. |
-| `col-gpios` (left) | `pro_micro` pins 2 to 7, active high | `config/boards/shields/dactyl/dactyl_left.overlay:14-21` | Column pins of the left half. |
-| `col-gpios` (right) | `pro_micro` pins 2 to 7, active high | `config/boards/shields/dactyl/dactyl_right.overlay:27-34` | Same pinout as the left; the PCB is the mirror image. |
+| `col-gpios` (left) | `pro_micro` pins 2 to 7, active high | `config/boards/shields/dactyl/dactyl_left.overlay:5-12` | Column pins of the left half. |
+| `col-gpios` (right) | `pro_micro` pins 2 to 7, active high | `config/boards/shields/dactyl/dactyl_right.overlay:5-12` | Same pinout as the left; the PCB is the mirror image. |
 | `columns` / `rows` | `12` / `4` | `config/boards/shields/dactyl/dactyl.dtsi:34-35` | Size of the shared matrix transform. |
-| `col-offset` (right only) | `6` | `config/boards/shields/dactyl/dactyl_right.overlay:39` | The right half owns columns 6 to 11. |
+| `col-offset` (right only) | `6` | `config/boards/shields/dactyl/dactyl_right.overlay:17` | The right half owns columns 6 to 11. |
 | `map` | `RC(r,c)` list, right half reversed | `config/boards/shields/dactyl/dactyl.dtsi:36-41` | Maps matrix positions to key positions 0 to 47. |
 
 Shield metadata `config/boards/shields/dactyl/dactyl.zmk.yml:1-9`: `id: dactyl_4x6`, `type: shield`, `requires: [pro_micro]`, `exposes: []`, `features: [keys]`.
@@ -60,7 +60,7 @@ Shield metadata `config/boards/shields/dactyl/dactyl.zmk.yml:1-9`: `id: dactyl_4
 
 ### 1.5 Generator parameters: `hardware/18650-holder/holder_18650_tight.mjs` (object `P`, lines 40-84)
 
-All lengths in mm. Edit the value and re-run `npm run build` (`hardware/18650-holder/package.json:7`). "Read at" gives the first line where `P.<name>` is consumed.
+All lengths in mm. Edit the value and re-run `npm run build` (`hardware/18650-holder/package.json:8`). "Read at" gives the first line where `P.<name>` is consumed.
 
 | Parameter | Value | Read at | Effect |
 |---|---|---|---|
@@ -130,7 +130,7 @@ Nothing reloads without a rebuild.
 |---|---|
 | `config/dactyl.keymap` | Keymap (devicetree). Documented in `docs/03-keymap.md`, not covered by this section. |
 | `config/boards/shields/dactyl/dactyl.zmk.yml` | Shield metadata, see 1.3. |
-| `hardware/18650-holder/package.json`, `hardware/switch-button/package.json` | npm manifests with the single `build` script (`package.json:7`) and the `manifold-3d` dependency. |
+| `hardware/18650-holder/package.json`, `hardware/switch-button/package.json` | npm manifests with the single `build` script (`hardware/18650-holder/package.json:8`, `hardware/switch-button/package.json:8`) and the `manifold-3d` dependency. |
 | `.gitignore` | Excludes `build/`, `*.uf2`, `.west/`, `modules/`, `zephyr/`, `zmk/`, `node_modules/` (`.gitignore:1-12`). |
 
 Precedence: `config/dactyl.conf` overrides the Kconfig defaults of ZMK and Zephyr. The shield `Kconfig.defconfig` only changes defaults, so a same-named key in `dactyl.conf` would win (inferred from code, standard Kconfig behavior).
@@ -147,6 +147,6 @@ There is a single environment: the GitHub Actions build (`.github/workflows/buil
 
 - `P.tabLen` is defined and never read in `hardware/18650-holder/holder_18650_tight.mjs:76`.
 - `west.yml` and the CI workflow track `main` of ZMK (`config/west.yml:8`, `.github/workflows/build.yml:6`), so every build can change without a commit in this repo.
-- The catalog entry for F10 still says the idle timeout is "default 15 min, not set in repo" while `config/dactyl.conf:6` now sets it to 300000.
+- Item 2 of the resolved list in `docs/preguntas-abiertas.md` records the decision for the 5 min idle timeout (`config/dactyl.conf:6`, committed in `8ac7234`); `config/dactyl.conf` is the source of truth.
 - Defaults of ZMK/Zephyr keys (`CONFIG_ZMK_SLEEP`, `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT`, `CONFIG_ZMK_BATTERY_REPORTING`, `CONFIG_BT_GATT_ENFORCE_SUBSCRIPTION`) are not provable from this repo.
 - The header comment of `holder_18650_tight.mjs` (lines 8-26) describes the earlier flush-wall geometry while `roundEnds: true` is now the default; only the `P` object is authoritative.

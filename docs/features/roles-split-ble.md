@@ -27,7 +27,7 @@ Defines the two halves of the Dactyl 4x6 as one ZMK split keyboard. The left hal
    2. `ZMK_SPLIT_ROLE_CENTRAL` defaults to `y`, so the left half is the central (`config/boards/shields/dactyl/Kconfig.defconfig:6-7`).
 3. For either shield (`if SHIELD_DACTYL_LEFT || SHIELD_DACTYL_RIGHT`) `ZMK_SPLIT` defaults to `y` (`config/boards/shields/dactyl/Kconfig.defconfig:11-14`).
 4. The right half gets no role setting, so it is built as a peripheral and links to the central over BLE (inferred from code: ZMK default when `ZMK_SPLIT` is on and `ZMK_SPLIT_ROLE_CENTRAL` is off; the ZMK source is not in this repo).
-5. The central holds the keymap and runs the layer logic. Key positions of the right half arrive offset by 6 columns, see [F8](matriz-teclado-split.md) (`config/boards/shields/dactyl/dactyl_right.overlay:28-31`).
+5. The central holds the keymap and runs the layer logic. Key positions of the right half arrive offset by 6 columns, see [F8](matriz-teclado-split.md) (`config/boards/shields/dactyl/dactyl_right.overlay:15-18`).
 6. Settings shared by both halves, including battery reporting between the roles, live in `config/dactyl.conf` and are covered by [F11](informe-bateria-ble.md) (`config/dactyl.conf:10-12`).
 
 ## Exit points
@@ -49,7 +49,7 @@ Defines the two halves of the Dactyl 4x6 as one ZMK split keyboard. The left hal
 ## Errors and edge cases
 
 - Building a shield name other than `dactyl_left` or `dactyl_right` sets neither symbol, so no split role or name is defined from this shield (inferred from code) (`config/boards/shields/dactyl/Kconfig.shield:2`, `config/boards/shields/dactyl/Kconfig.shield:5`).
-- Flashing the left image on the right half (or the reverse): the matrix pins are identical but `col-offset` is set only on the right (`config/boards/shields/dactyl/dactyl_left.overlay:3-13`, `config/boards/shields/dactyl/dactyl_right.overlay:28-31`). Whether the keyboard still works in that case is not verifiable from code.
+- Flashing the left image on the right half (or the reverse): the matrix pins are identical but `col-offset` is set only on the right (`config/boards/shields/dactyl/dactyl_left.overlay:3-13`, `config/boards/shields/dactyl/dactyl_right.overlay:15-18`). Whether the keyboard still works in that case is not verifiable from code.
 - With `settings_reset` the shield list contains neither Dactyl shield, so none of this feature applies (`build.yaml:7-8`); see [F13](reset-ajustes-bonds.md).
 - Central role on the left means the host pairs with the left half only; the right half is not visible to the host (inferred from code: standard ZMK split behavior).
 - `west.yml` tracks ZMK `main`, so the role defaults come from whatever ZMK revision is current at build time (`config/west.yml:6-8`).
@@ -58,7 +58,7 @@ Defines the two halves of the Dactyl 4x6 as one ZMK split keyboard. The left hal
 
 | Si hay que cambiar... | Empezar en |
 |---|---|
-| Which half is central (swap roles) | `config/boards/shields/dactyl/Kconfig.defconfig` → `ZMK_SPLIT_ROLE_CENTRAL` (`config/boards/shields/dactyl/Kconfig.defconfig:6-7`); the keyboard name goes with it (`config/boards/shields/dactyl/Kconfig.defconfig:3-4`); the right-half column offset must follow (`config/boards/shields/dactyl/dactyl_right.overlay:28-31`) |
+| Which half is central (swap roles) | `config/boards/shields/dactyl/Kconfig.defconfig` → `ZMK_SPLIT_ROLE_CENTRAL` (`config/boards/shields/dactyl/Kconfig.defconfig:6-7`); the keyboard name goes with it (`config/boards/shields/dactyl/Kconfig.defconfig:3-4`); the right-half column offset must follow (`config/boards/shields/dactyl/dactyl_right.overlay:15-18`) |
 | Keyboard name shown to the host | `config/boards/shields/dactyl/Kconfig.defconfig` → `ZMK_KEYBOARD_NAME` (`config/boards/shields/dactyl/Kconfig.defconfig:3-4`) |
 | Shield selection symbols (rename a shield, add a variant) | `config/boards/shields/dactyl/Kconfig.shield` → `SHIELD_DACTYL_LEFT` / `SHIELD_DACTYL_RIGHT` (`config/boards/shields/dactyl/Kconfig.shield:1-5`) |
 | Shield metadata (id, name, required board interface, features) | `config/boards/shields/dactyl/dactyl.zmk.yml` (`config/boards/shields/dactyl/dactyl.zmk.yml:2-9`) |

@@ -43,7 +43,7 @@ No ticket ids exist in the git history or the docs, so every feature is `sin tic
 | `Kconfig.defconfig` (left central, keyboard name, split) | Config | `config/boards/shields/dactyl/Kconfig.defconfig:1` | F9 |
 | `Kconfig.shield`, `dactyl.zmk.yml` | Config | `config/boards/shields/dactyl/Kconfig.shield:1`, `dactyl.zmk.yml:1` | F9 |
 | `CONFIG_ZMK_SLEEP=y` | Config | `config/dactyl.conf:5` | F10 |
-| `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=300000` (uncommitted) | Config | `config/dactyl.conf:6` | F10 |
+| `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=300000` | Config | `config/dactyl.conf:6` | F10 |
 | `kscan0` `wakeup-source` | Config | `config/boards/shields/dactyl/dactyl.dtsi:12` | F10 (+ F8) |
 | `CONFIG_ZMK_BATTERY_REPORTING` and central fetch/proxy | Config | `config/dactyl.conf:10-12` | F11 (+ F9) |
 | `CONFIG_BT_GATT_ENFORCE_SUBSCRIPTION=n` | Config | `config/dactyl.conf:15` | F11 |
@@ -52,8 +52,8 @@ No ticket ids exist in the git history or the docs, so every feature is `sin tic
 | `west.yml` ZMK `main` manifest (unpinned at line 8) | Config | `config/west.yml:1` | F12 |
 | `settings_reset` build target | Config | `build.yaml:7` | F13 (+ F12) |
 | Manual double-tap reset and `.uf2` copy (documented only) | CLI | `README.md:64` | F14 |
-| `npm run build` / `node holder_18650_tight.mjs [output-dir]` | CLI | `hardware/18650-holder/package.json:7` | F15 |
-| `npm run build` / `node switch_cap.mjs [output-dir]` | CLI | `hardware/switch-button/package.json:7` | F16 |
+| `npm run build` / `node holder_18650_tight.mjs [output-dir]` | CLI | `hardware/18650-holder/package.json:8` | F15 |
+| `npm run build` / `node switch_cap.mjs [output-dir]` | CLI | `hardware/switch-button/package.json:8` | F16 |
 
 ## Features -> exit points
 
@@ -68,7 +68,7 @@ No ticket ids exist in the git history or the docs, so every feature is `sin tic
 | F7 | BLE active profile and bond state (flash settings); advertising change on switch (inferred) |
 | F8 | ZMK key position events 0..47; right half reported over BLE to the central |
 | F9 | BLE advertised name `Dactyl 4x6` (left build); split BLE link right to left |
-| F10 | MCU deep sleep after `ZMK_IDLE_SLEEP_TIMEOUT` (5 min in the working tree, 15 min default at HEAD); wake on key press |
+| F10 | MCU deep sleep after `ZMK_IDLE_SLEEP_TIMEOUT` (5 min, set in commit `8ac7234`; ZMK default is 15 min); wake on key press |
 | F11 | BLE GATT Battery Service to the host (left level and proxied right level); split link from the right half |
 | F12 | Workflow artifacts: `dactyl_left`, `dactyl_right`, `settings_reset` `.uf2` for `nice_nano//zmk` |
 | F13 | Flash settings partition of the half erased (bonds, profiles) |

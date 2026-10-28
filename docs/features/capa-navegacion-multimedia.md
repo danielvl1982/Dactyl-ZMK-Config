@@ -59,7 +59,7 @@ The NAV layer (layer 2) gives the keyboard function keys, cursor keys, Home/End/
 ## Errors and edge cases
 
 - `C_PP` replaces `SPACE` while NAV is held, so there is no space bar in NAV (`config/dactyl.keymap:73`, `config/dactyl.keymap:50`).
-- `Q W E R T`, `Y U I O`, `A S D F G`, `H J K L`, `Z X C V B` and `N M , . /` are all shadowed on NAV, so no letter can be typed while it is held (`config/dactyl.keymap:67-71`).
+- `Q W E R T`, `Y U I O`, `A S D F G`, `H J K L`, `Z X C V B` and `N M , . /` are all shadowed on NAV. `P`, `ñ` and the dead acute stay typeable because their NAV positions are `&trans` (`config/dactyl.keymap:67`, `config/dactyl.keymap:69`); every other letter cannot be typed while NAV is held (`config/dactyl.keymap:67-71`).
 - The right outer key of row 1 is `&trans` and falls to `&mo LAYER_SYM`; holding it with NAV activates both layers, and the higher index (SYM = 3) wins where both bind a key (inferred from code, ZMK layer priority; `config/dactyl.keymap:67`, `config/dactyl.keymap:44`, `config/dactyl.keymap:17`).
 - Consumer keys need the host to accept consumer HID usages; the project config does not enable or disable them explicitly (inferred from code, ZMK default; `config/dactyl.conf:1-15`).
 - `F1`-`F12` and media keys depend on host and OS shortcuts; behavior on the host is not verifiable from code.
@@ -89,4 +89,4 @@ The NAV layer (layer 2) gives the keyboard function keys, cursor keys, Home/End/
 - `docs/03-keymap.md` says "not yet flashed", so NAV behavior on hardware is unverified (`docs/03-keymap.md:3`, `docs/04-roadmap.md:57`).
 - The roadmap still lists "verify NUM, NAV and SYM as momentary layers" as pending (`docs/04-roadmap.md:57`).
 - Catalog exits for F4 omit the Bluetooth bindings that share the layer; see Exit points.
-- Open questions: `docs/.work/questions/capa-navegacion-multimedia.md`.
+- Open questions: `docs/preguntas-abiertas.md` items 14, 15, 45 and 46.
