@@ -16,14 +16,14 @@ config ZMK_SPLIT
 endif
 
 # Bring-up shields: standalone USB keyboards, no split.
-if SHIELD_DACTYL_LEFT_SOLO
+if SHIELD_DACTYL4X6LH
 
 config ZMK_KEYBOARD_NAME
     default "Dactyl 4x6 Left"
 
 endif
 
-if SHIELD_DACTYL_RIGHT_SOLO
+if SHIELD_DACTYL4X6RH
 
 config ZMK_KEYBOARD_NAME
     default "Dactyl 4x6 Right"

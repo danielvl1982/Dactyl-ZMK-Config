@@ -3,7 +3,7 @@
 /*
  * Bring-up shield: one half acting as a complete, standalone USB keyboard
  * (no split, no Bluetooth). Both halves share the same pinout; only the matrix
- * transform differs (see dactyl_left_solo.overlay / dactyl_right_solo.overlay).
+ * transform differs (see dactyl4x6lh.overlay / dactyl4x6rh.overlay).
  */
 / {
     chosen {
