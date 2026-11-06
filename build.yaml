@@ -1,4 +1,12 @@
 include:
+  # Stage 1 (bring-up): each half as an independent USB keyboard, no split, no BLE.
+  - board: nice_nano//zmk
+    shield: dactyl_left_solo
+    cmake-args: -DCONFIG_ZMK_BLE=n
+  - board: nice_nano//zmk
+    shield: dactyl_right_solo
+    cmake-args: -DCONFIG_ZMK_BLE=n
+  # Stage 2+ (wireless / split).
   - board: nice_nano//zmk
     shield: dactyl_left
   - board: nice_nano//zmk

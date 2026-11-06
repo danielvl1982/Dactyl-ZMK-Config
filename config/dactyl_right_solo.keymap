@@ -1,0 +1,21 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+
+/*
+ * Bring-up keymap: right half alone over USB. Layer keys are replaced by F13-F15
+ * so every switch emits something visible in a key tester.
+ */
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+
+        base_layer {
+            bindings = <
+                &kp Y     &kp U      &kp I      &kp O      &kp P      &kp F13
+                &kp H     &kp J      &kp K      &kp L      &kp SEMI   &kp SQT
+                &kp N     &kp M      &kp COMMA  &kp DOT    &kp SLASH  &kp F14
+                &kp ENTER &kp BSPC   &kp F15    &kp LALT   &kp END    &none
+            >;
+        };
+    };
+};
