@@ -3,9 +3,3 @@ config SHIELD_DACTYL_LEFT
 
 config SHIELD_DACTYL_RIGHT
     def_bool $(shields_list_contains,dactyl_right)
-
-config SHIELD_DACTYL4X6LH
-    def_bool $(shields_list_contains,dactyl4x6lh)
-
-config SHIELD_DACTYL4X6RH
-    def_bool $(shields_list_contains,dactyl4x6rh)
