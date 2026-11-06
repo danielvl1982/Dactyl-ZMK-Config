@@ -1,4 +1,4 @@
-#include "dactyl_solo.dtsi"
+#include "../dactyl/dactyl_solo.dtsi"
 
 / {
     solo_transform: keymap_transform_solo {

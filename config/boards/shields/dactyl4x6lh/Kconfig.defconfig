@@ -1,0 +1,6 @@
+if SHIELD_DACTYL4X6LH
+
+config ZMK_KEYBOARD_NAME
+    default "Dactyl 4x6 Left"
+
+endif
