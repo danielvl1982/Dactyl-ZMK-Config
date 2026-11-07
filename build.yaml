@@ -6,7 +6,14 @@ include:
   - board: nice_nano//zmk
     shield: dactyl4x6rh
     cmake-args: -DCONFIG_ZMK_BLE=n
-  # Stage 2+ (wireless / split).
+  # Stages 2-3 (bring-up): same independent halves, now over Bluetooth (no split).
+  - board: nice_nano//zmk
+    shield: dactyl4x6lh
+    artifact-name: dactyl4x6lh_ble
+  - board: nice_nano//zmk
+    shield: dactyl4x6rh
+    artifact-name: dactyl4x6rh_ble
+  # Stage 4 (split).
   - board: nice_nano//zmk
     shield: dactyl_left
   - board: nice_nano//zmk
