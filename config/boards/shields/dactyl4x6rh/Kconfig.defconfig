@@ -1,6 +1,6 @@
 if SHIELD_DACTYL4X6RH
 
 config ZMK_KEYBOARD_NAME
-    default "Dactyl 4x6 Right"
+    default "Dactyl 4x6 R"
 
 endif
